@@ -1,215 +1,215 @@
 【全ツール共通】コンテキストファイル共有ガイド
-\=================================================
+=================================================
 
-\*\*Last Updated:\*\* 2026-05-05
-\*\*Status:\*\* Phase 0 (Google Drive .txt snapshot, preventing auto-conversion)
+**Last Updated:** 2026-05-05
+**Status:** Phase 0 (Google Drive .txt snapshot, preventing auto-conversion)
 
-\#\# 基本的な考え方
+## 基本的な考え方
 
-このファイル群は、Claude Chat、Cowork、Claude Code、Codex、ChatGPT といった複数の AI ツール間で「\*\*共通の文脈・ルール・前提\*\*」を共有するためのものです。
+このファイル群は、Claude Chat、Cowork、Claude Code、Codex、ChatGPT といった複数の AI ツール間で「**共通の文脈・ルール・前提**」を共有するためのものです。
 
-各ツールはローカルプロジェクト機能を持っており、そのプロジェクトで \*\*このフォルダ（Google Drive）を参照\*\* することで、ツール間での一貫性を保ちながらも、各ツールの得意分野に特化した作業ができるようになっています。
+各ツールはローカルプロジェクト機能を持っており、そのプロジェクトで **このフォルダ（Google Drive）を参照** することで、ツール間での一貫性を保ちながらも、各ツールの得意分野に特化した作業ができるようになっています。
 
-\#\# 基本方針
+## 基本方針
 
-\#\#\# 1. Google Drive を SSOT（Single Source of Truth）とする
+### 1. Google Drive を SSOT（Single Source of Truth）とする
 
-\- コンテキストファイルの本体：Google Drive 内の「専務理事対応（AI活用）」フォルダに配置
-\- Drive URL: https://drive.google.com/drive/folders/11ryHnY2sXh9Ofio3vSsFHxOQhOr6Wcau
-\- 各ツールのローカルプロジェクト設定で、Drive フォルダを参照先として指定
-\- 更新は Drive に集約することで、複製・重複を回避
+- コンテキストファイルの本体：Google Drive 内の「専務理事対応（AI活用）」フォルダに配置
+- Drive URL: https://drive.google.com/drive/folders/11ryHnY2sXh9Ofio3vSsFHxOQhOr6Wcau
+- 各ツールのローカルプロジェクト設定で、Drive フォルダを参照先として指定
+- 更新は Drive に集約することで、複製・重複を回避
 
-\#\#\# 1-補足. 現在のSSOT進捗（Aスレッド完了済み）
+### 1-補足. 現在のSSOT進捗（Aスレッド完了済み）
 
 2026-05-05 時点で、Aスレッド「Drive アップロード＆old フォルダ構築」は完了済みです。
 
-\- Drive 直下に Phase 0 コンテキスト \`.txt\` 5件を配置済み
-\- Drive 直下に \`old/\` フォルダを作成済み
-\- 古い Google Docs 形式ファイル4件を \`old/\` に移動済み
-\- 詳細な完了ログは Codex ローカル \`context/A\\_THREAD\\_STATUS.md\` を参照
+- Drive 直下に Phase 0 コンテキスト `.txt` 5件を配置済み
+- Drive 直下に `old/` フォルダを作成済み
+- 古い Google Docs 形式ファイル4件を `old/` に移動済み
+- 詳細な完了ログは Codex ローカル `context/A_THREAD_STATUS.md` を参照
 
 Code / Codex が Google Drive for desktop 経由で参照する場合のローカル同期パス：
 
-\`\`\`text
-G:\\\\.shortcut-targets-by-id\\\\1zf8-\\_vHotCdZBPhtuSawV\\_jtkQ9zYQ7a\\\\2026年度\\_あきる野青年会議所\\\\10\\_執行部\\\\せ・専務理事ファイル\\\\近藤\\_2026\\\\専務理事対応（AI活用）
-\`\`\`
+```text
+G:\\.shortcut-targets-by-id\\1zf8-_vHotCdZBPhtuSawV_jtkQ9zYQ7a\\2026年度_あきる野青年会議所\\10_執行部\\せ・専務理事ファイル\\近藤_2026\\専務理事対応（AI活用）
+```
 
 ローカル同期パスは補助情報です。全ツール共通の正本は上記 Drive URL のフォルダです。
 
-\#\#\# 2. ファイル形式：\`.txt\` 形式で Google Drive の自動変換を防止
+### 2. ファイル形式：`.txt` 形式で Google Drive の自動変換を防止
 
-\- \*\*背景\*\*：Google Drive は \`.md\` ファイルを自動的に Google Docs (\`.gdoc\`) に変換するため、AI ツールから plain text として読み込めなくなる
-\- \*\*対策\*\*：\`.txt\` 拡張子を使用し、自動変換を防止
-\- \*\*実効性\*\*：\`.txt\` 形式のまま Google Drive から参照可能 → AI ツールが plain text context として認識可能
+- **背景**：Google Drive は `.md` ファイルを自動的に Google Docs (`.gdoc`) に変換するため、AI ツールから plain text として読み込めなくなる
+- **対策**：`.txt` 拡張子を使用し、自動変換を防止
+- **実効性**：`.txt` 形式のまま Google Drive から参照可能 → AI ツールが plain text context として認識可能
 
-\#\#\# 3. 読み取り優先度（各ツール共通）
+### 3. 読み取り優先度（各ツール共通）
 
 優先度の高い順：
 
-1\\. \*\*\`.txt\` files\*\* （Google Drive に配置、自動変換なし）
-2\\. \*\*\`.md\` files\*\* （ローカルプロジェクト内に保有、Drive 未登録）
-3\\. \*\*\`.gdoc\` files\*\* （古いファイル、使用禁止、old フォルダに移動済み）
+1. **`.txt` files** （Google Drive に配置、自動変換なし）
+2. **`.md` files** （ローカルプロジェクト内に保有、Drive 未登録）
+3. **`.gdoc` files** （古いファイル、使用禁止、old フォルダに移動済み）
 
-\#\# ファイル構成
+## ファイル構成
 
-\#\#\# コア コンテキストファイル（優先度 1）
+### コア コンテキストファイル（優先度 1）
 
 | ファイル | 説明 | 対象ツール |
 |---------|------|----------|
-| \`CLAUDE\\_enhanced.md.txt\` | プロジェクト全体方針・ロードマップ・ツール分担・Facebook 投稿統合 | 全ツール（基本参照） |
-| \`VISION.md.txt\` | 詳細ビジョン・戦略参考・ユースケース・設計思想 | Chat、Code（設計支援） |
-| \`SHARED\\_SOURCE.txt\` | \*\*このファイル\*\* — ツール間の読み取りルール・ファイル構成・基本方針 | 全ツール（毎回読む） |
-| \`codex\\_context\\_latest.txt\` | Codex 専用ガイド（読み取り優先度・役割定義） | Codex 専用 |
-| \`AGENTS.md.txt\` | AI ツール運用ルール・分担表・LOM 発送ルール | Code、Codex、Cowork |
+| `CLAUDE_enhanced.md.txt` | プロジェクト全体方針・ロードマップ・ツール分担・Facebook 投稿統合 | 全ツール（基本参照） |
+| `VISION.md.txt` | 詳細ビジョン・戦略参考・ユースケース・設計思想 | Chat、Code（設計支援） |
+| `SHARED_SOURCE.txt` | **このファイル** — ツール間の読み取りルール・ファイル構成・基本方針 | 全ツール（毎回読む） |
+| `codex_context_latest.txt` | Codex 専用ガイド（読み取り優先度・役割定義） | Codex 専用 |
+| `AGENTS.md.txt` | AI ツール運用ルール・分担表・LOM 発送ルール | Code、Codex、Cowork |
 
-\#\#\# 補助コンテキストファイル（参考用）
+### 補助コンテキストファイル（参考用）
 
 | ファイル | 説明 | 用途 |
 |---------|------|------|
-| \`CODEX\\_PROJECT\\_SETUP.txt\` | Codex ローカル環境セットアップ手順 | Codex 初期セットアップ |
-| \`CODEX\\_WORKFLOW.md.txt\` | Codex 標準ワークフロー・ファイル命名規則 | Codex 実行時リファレンス |
+| `CODEX_PROJECT_SETUP.txt` | Codex ローカル環境セットアップ手順 | Codex 初期セットアップ |
+| `CODEX_WORKFLOW.md.txt` | Codex 標準ワークフロー・ファイル命名規則 | Codex 実行時リファレンス |
 
-\#\#\# アーカイブ（old フォルダ内）
+### アーカイブ（old フォルダ内）
 
-Google Drive による自動変換で \`.gdoc\` 化したファイル：
+Google Drive による自動変換で `.gdoc` 化したファイル：
 
-\- \`ARCHITECTURE.md.gdoc\` → old/ へ移動済み
-\- \`classification\\_rules.md.gdoc\` → old/ へ移動済み
-\- \`lom\\_process.md.gdoc\` → old/ へ移動済み
-\- 他の古い \`.gdoc\` ファイル → old/ へ移動済み
+- `ARCHITECTURE.md.gdoc` → old/ へ移動済み
+- `classification_rules.md.gdoc` → old/ へ移動済み
+- `lom_process.md.gdoc` → old/ へ移動済み
+- 他の古い `.gdoc` ファイル → old/ へ移動済み
 
-参照禁止。混乱防止のため Drive 上で \`old/\` フォルダに格納済み。
+参照禁止。混乱防止のため Drive 上で `old/` フォルダに格納済み。
 
-\#\# ツール別の読み取りフロー
+## ツール別の読み取りフロー
 
-\#\#\# Claude Chat（設計・構想層）
+### Claude Chat（設計・構想層）
 
-\`\`\`
-1\\. まず SHARED\\_SOURCE.txt を読む（このファイル）
-2\\. CLAUDE\\_enhanced.md.txt で全体像把握
-3\\. VISION.md.txt で詳細戦略確認
-4\\. 以降の質問・設計支援は上記前提で対応
-\`\`\`
+```
+1. まず SHARED_SOURCE.txt を読む（このファイル）
+2. CLAUDE_enhanced.md.txt で全体像把握
+3. VISION.md.txt で詳細戦略確認
+4. 以降の質問・設計支援は上記前提で対応
+```
 
-\#\#\# Cowork（運用・実行層）
+### Cowork（運用・実行層）
 
-\`\`\`
-1\\. SHARED\\_SOURCE.txt 確認
-2\\. CLAUDE\\_enhanced.md.txt で方針確認
-3\\. AGENTS.md.txt で LOM・定常業務ルール確認
-4\\. Sheets / Notion へのデータ登録・更新実行
-\`\`\`
+```
+1. SHARED_SOURCE.txt 確認
+2. CLAUDE_enhanced.md.txt で方針確認
+3. AGENTS.md.txt で LOM・定常業務ルール確認
+4. Sheets / Notion へのデータ登録・更新実行
+```
 
-\#\#\# Claude Code（実装・テンプレート生成層）
+### Claude Code（実装・テンプレート生成層）
 
-\`\`\`
-1\\. SHARED\\_SOURCE.txt 確認
-2\\. CLAUDE\\_enhanced.md.txt で基本設計確認
-3\\. AGENTS.md.txt で ファイル命名・Output 規則確認
-4\\. Markdown / Office テンプレート生成
-\`\`\`
+```
+1. SHARED_SOURCE.txt 確認
+2. CLAUDE_enhanced.md.txt で基本設計確認
+3. AGENTS.md.txt で ファイル命名・Output 規則確認
+4. Markdown / Office テンプレート生成
+```
 
-\#\#\# Codex（高度な改修・カスタマイズ層）
+### Codex（高度な改修・カスタマイズ層）
 
-\`\`\`
-1\\. SHARED\\_SOURCE.txt 確認
-2\\. codex\\_context\\_latest.txt で Codex 専用ルール確認
-3\\. AGENTS.md.txt で LOM ルール確認
-4\\. CODEX\\_WORKFLOW.md.txt でファイル検証基準確認
-5\\. ローカルプロジェクト実行
-\`\`\`
+```
+1. SHARED_SOURCE.txt 確認
+2. codex_context_latest.txt で Codex 専用ルール確認
+3. AGENTS.md.txt で LOM ルール確認
+4. CODEX_WORKFLOW.md.txt でファイル検証基準確認
+5. ローカルプロジェクト実行
+```
 
-\#\#\# ChatGPT（代替案・文案作成層）
+### ChatGPT（代替案・文案作成層）
 
-\`\`\`
-1\\. SHARED\\_SOURCE.txt 概要確認（オプション）
-2\\. Chat が決めた方針を ChatGPT に投げて文案生成
-3\\. 品質チェックして Cowork で登録
-\`\`\`
+```
+1. SHARED_SOURCE.txt 概要確認（オプション）
+2. Chat が決めた方針を ChatGPT に投げて文案生成
+3. 品質チェックして Cowork で登録
+```
 
-\#\# 更新のルール
+## 更新のルール
 
-\#\#\# 誰が何を更新するか
+### 誰が何を更新するか
 
 | 対象ファイル | 更新者 | タイミング |
 |-----------|------|----------|
-| SHARED\\_SOURCE.txt | Claude Chat / Code | 方針変更時（稀） |
-| CLAUDE\\_enhanced.md.txt | Claude Chat / Code | 月 1 回レビュー、Facebook 投稿更新時 |
+| SHARED_SOURCE.txt | Claude Chat / Code | 方針変更時（稀） |
+| CLAUDE_enhanced.md.txt | Claude Chat / Code | 月 1 回レビュー、Facebook 投稿更新時 |
 | VISION.md.txt | Claude Chat / Code | 四半期ごとのロードマップ更新時 |
-| codex\\_context\\_latest.txt | Codex / Code | Codex ルール変更時 |
+| codex_context_latest.txt | Codex / Code | Codex ルール変更時 |
 | AGENTS.md.txt | Codex / Code / Chat | LOM ルール変更時（年 1 回程度） |
 
-\#\#\# 更新時の流れ
+### 更新時の流れ
 
-1\\. \*\*編集者\*\*がローカルで \`.txt\` ファイルを修正
-2\\. Drive にアップロード（手動または CLI 経由）
-3\\. 各ツールのプロジェクト設定で参照を確認
-4\\. 変更内容を MEMORY.md に記録（必要に応じて）
+1. **編集者**がローカルで `.txt` ファイルを修正
+2. Drive にアップロード（手動または CLI 経由）
+3. 各ツールのプロジェクト設定で参照を確認
+4. 変更内容を MEMORY.md に記録（必要に応じて）
 
-\#\#\# 更新時の注意
+### 更新時の注意
 
-\- \`.txt\` 版を優先して更新する
-\- \`.gdoc\` 版は旧変換ファイルとして扱い、参照しない
-\- Drive の \`old/\` はアーカイブ領域であり、現行コンテキストの配置先にしない
-\- Code / Codex で Drive Desktop を使う場合は、上記ローカル同期パスから配置・検証できる
+- `.txt` 版を優先して更新する
+- `.gdoc` 版は旧変換ファイルとして扱い、参照しない
+- Drive の `old/` はアーカイブ領域であり、現行コンテキストの配置先にしない
+- Code / Codex で Drive Desktop を使う場合は、上記ローカル同期パスから配置・検証できる
 
-\#\# Google Drive フォルダ構成
+## Google Drive フォルダ構成
 
-\`\`\`
+```
 専務理事対応（AI活用）/
- ├── CLAUDE\\_enhanced.md ← コア（基本参照）
+ ├── CLAUDE_enhanced.md ← コア（基本参照）
  ├── VISION.md
- ├── SHARED\\_SOURCE.txt ← このファイル
- ├── codex\\_context\\_latest.txt
+ ├── SHARED_SOURCE.txt ← このファイル
+ ├── codex_context_latest.txt
  ├── AGENTS.md.txt
- ├── CODEX\\_PROJECT\\_SETUP.txt
- ├── CODEX\\_WORKFLOW.md.txt
+ ├── CODEX_PROJECT_SETUP.txt
+ ├── CODEX_WORKFLOW.md.txt
  │
  └── old/ ← アーカイブ
  ├── CLAUDE.md
  ├── ARCHITECTURE.md
- ├── classification\\_rules.md
- └── lom\\_process.md (Summary)
-\`\`\`
+ ├── classification_rules.md
+ └── lom_process.md (Summary)
+```
 
-補足：Drive UI 上では \`old/\` 内のファイルは Google Docs として表示されます。現行参照はルート直下の \`.txt\` ファイルを優先してください。
+補足：Drive UI 上では `old/` 内のファイルは Google Docs として表示されます。現行参照はルート直下の `.txt` ファイルを優先してください。
 
-\#\# スレッド命名規則への参照
+## スレッド命名規則への参照
 
 プロジェクトの進捗管理として「スレッド」を記録・クローズする際、標準的な命名規則を採用しています。
 
-詳細は \*\*AGENTS.md.txt の「スレッド命名規則」セクション\*\* を参照してください。
+詳細は **AGENTS.md.txt の「スレッド命名規則」セクション** を参照してください。
 
 主要ポイント：
-\- 冒頭に \*\*ステータス絵文字\*\* （✅ 完成 / ð 進行中 / ð 計画 / ⚠️ 課題）
-\- 次に \*\*【フェーズ/プロジェクト名】メインタイトル\*\*
-\- 詳細説明（成果物・付属作業）を列挙
-\- \*\*末尾に使用モデル\*\* （Claude Haiku 4.5 など）
+- 冒頭に **ステータス絵文字** （✅ 完成 / 🔄 進行中 / 📋 計画 / ⚠️ 課題）
+- 次に **【フェーズ/プロジェクト名】メインタイトル**
+- 詳細説明（成果物・付属作業）を列挙
+- **末尾に使用モデル** （Claude Haiku 4.5 など）
 
-\---
+---
 
-\#\# よくある質問
+## よくある質問
 
-\#\#\# Q. 古い \`.gdoc\` ファイルは削除してもいい？
+### Q. 古い `.gdoc` ファイルは削除してもいい？
 
-\*\*A.\*\* 一旦 \`old/\` フォルダに移動した状態で保有してください。1-2 ヶ月様子を見て、参照がなければ完全削除OK。
+**A.** 一旦 `old/` フォルダに移動した状態で保有してください。1-2 ヶ月様子を見て、参照がなければ完全削除OK。
 
-\#\#\# Q. \`.txt\` ファイルを更新したら、全ツールに反映される？
+### Q. `.txt` ファイルを更新したら、全ツールに反映される？
 
-\*\*A.\*\* はい。Google Drive の \`.txt\` ファイルを更新すれば、各ツール（Chat・Code・Cowork・Codex）のプロジェクト設定で参照しているファイルが自動更新されます。
+**A.** はい。Google Drive の `.txt` ファイルを更新すれば、各ツール（Chat・Code・Cowork・Codex）のプロジェクト設定で参照しているファイルが自動更新されます。
 
-\#\#\# Q. ローカルプロジェクトに \`.md\` ファイルを保有するのはなぜ？
+### Q. ローカルプロジェクトに `.md` ファイルを保有するのはなぜ？
 
-\*\*A.\*\* Git 版( Phase 1 ) への移行に備えるため。ローカルで版管理できるようにしておくと、GitHub 移行時のスイッチが容易になります。
+**A.** Git 版( Phase 1 ) への移行に備えるため。ローカルで版管理できるようにしておくと、GitHub 移行時のスイッチが容易になります。
 
-\#\#\# Q. SHARED\\_SOURCE.txt は何回読む？
+### Q. SHARED_SOURCE.txt は何回読む？
 
-\*\*A.\*\* \*\*毎回読んでください\*\*。新しい質問やタスク開始時に、優先度・ルール・ツール分担が正しく理解されているか確認するためです。
+**A.** **毎回読んでください**。新しい質問やタスク開始時に、優先度・ルール・ツール分担が正しく理解されているか確認するためです。
 
-\#\#\# Q. スレッド命名は誰の責任？
+### Q. スレッド命名は誰の責任？
 
-\*\*A.\*\* \*\*Claude Chat（方針層）が提案\*\*します。Cowork・Code・Codex が完了時に「命名提案」を Chat に依頼し、Chat が AGENTS.md.txt の「スレッド命名規則」と「ツール別推奨パターン」に基づいて提案。ユーザーが最終判断。
+**A.** **Claude Chat（方針層）が提案**します。Cowork・Code・Codex が完了時に「命名提案」を Chat に依頼し、Chat が AGENTS.md.txt の「スレッド命名規則」と「ツール別推奨パターン」に基づいて提案。ユーザーが最終判断。
 
-\---
+---
 
-\*\*このドキュメントは Phase 0 の SSOT ファイルです。定期的に更新します。
+**このドキュメントは Phase 0 の SSOT ファイルです。定期的に更新します。
