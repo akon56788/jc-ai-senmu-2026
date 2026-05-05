@@ -32,6 +32,82 @@ This document defines comprehensive branch protection rules for the `main` branc
 
 ---
 
+## 🎯 Target Branches Configuration (Ruleset Foundation)
+
+| Item | Value |
+|------|-------|
+| **English Name** | Target branches |
+| **日本語名** | ルールセット適用対象ブランチ |
+| **概要** | このルールセットを適用するブランチを指定（どのブランチを保護するか） |
+| **Current Setting** | ⏳ Being configured (GitHub UI setup) |
+| **Phase 1** | ✅ Include default branch |
+| **Phase 2+** | ✅ Include default branch (unchanged) |
+| **Action Required** | ✅ YES - Set in Ruleset creation wizard NOW |
+| **詳細設定** | 👉 **[TB-A～TB-B を参照](#target-branches-detailed)** |
+
+---
+
+### Target Branches – Detailed Settings {#target-branches-detailed}
+
+#### TB-A: Include default branch
+
+**Configuration**:
+```
+☑ Include default branch (Recommended for Phase 1)
+```
+
+**What it does**:
+- Automatically applies ruleset to repository's default branch (currently `main`)
+- If default branch changes, ruleset follows it automatically
+- No manual branch name management needed
+
+**Setup in GitHub UI**:
+1. Ruleset creation wizard → "Target branches" section
+2. Check: ☑ **"Include default branch"**
+3. Click "Save"
+
+**Phase 1 Justification**:
+```
+✅ Simplest approach
+✅ Automatically protects main regardless of future default branch changes
+✅ No hardcoded branch names needed
+```
+
+**Expected Result**:
+- Warning message disappears: "This ruleset does not target any resources..."
+- Ruleset status becomes "Active" and applicable
+
+---
+
+#### TB-B: Specific branch names (Phase 2+ option)
+
+**When to use**:
+- Phase 2+: If you have multiple protected branches (develop, staging, release/*)
+- Pattern matching: Supports wildcards like `release/*`, `hotfix/*`
+
+**Example Phase 2 configuration**:
+```
+Target branches:
+  ☑ Include default branch (main)
+  ☑ Specific branch names:
+    - develop
+    - release/*
+```
+
+**Phase 1 Status**: ❌ Not needed (only main branch)
+
+**Future Setup** (Phase 2 reference):
+```yaml
+target_branches:
+  include_default: true
+  specific_names:
+    - develop
+    - release/*
+    - hotfix/*
+```
+
+---
+
 ## 🎯 Core Configuration Items (Parent Items Summary)
 
 ### 1. Restrict who can push to matching branches
