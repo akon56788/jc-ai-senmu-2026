@@ -47,6 +47,24 @@ This document defines comprehensive branch protection rules for the `main` branc
 
 ---
 
+### Target Branches – Selection Decision Matrix {#target-branches-decision}
+
+**「Include default branch」 vs 「Specific branch names」どちらを選ぶ？**
+
+| 判断項目 | Include default branch | Specific branch names |
+|---------|----------------------|----------------------|
+| **用途** | Main branch のみ保護 | 複数ブランチを個別指定 |
+| **ブランチ数** | 1 個（main） | 2 個以上 |
+| **設定難度** | ⭐ 最も簡単 | ⭐⭐⭐ 複雑 |
+| **保守性** | ⭐⭐⭐ 最高（自動追従） | ⭐⭐ 中（手動管理） |
+| **デフォルトブランチ変更時** | ✅ 自動追従 | ❌ 手動更新必要 |
+| **パターンマッチング** | なし | ⭐⭐⭐ サポート（release/*） |
+| **Phase 1** | ✅ **推奨** | ❌ 不要 |
+| **Phase 2+** | ✅ 継続 | ⏳ 検討（develop など） |
+| **変更予定日** | N/A | 2026-06-01 以降 |
+
+---
+
 ### Target Branches – Detailed Settings {#target-branches-detailed}
 
 #### TB-A: Include default branch
