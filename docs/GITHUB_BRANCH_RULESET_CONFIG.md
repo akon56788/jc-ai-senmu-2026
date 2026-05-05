@@ -169,13 +169,13 @@ target_branches:
 | **ドキュメント上** | Item 2 + Item 3 の統合 |
 | **日本語名** | ブランチ更新権限を制限 |
 | **概要** | Branch への更新（push）を制限し、bypass permission を持つユーザーのみ許可 |
-| **Current Setting** | ✅ ON (実装済み 2026-05-05) |
-| **Phase 1** | ✅ ON - Restrict to repository admins |
-| **Phase 2+** | ✅ ON - Refine based on team roles |
-| **Action Required** | ✅ YES - Already configured in Phase 1 ✓ |
-| **詳細設定** | 制限の詳細は Item 1 と同様（bypass actors） |
+| **Current Setting** | ⏸️ OFF (Phase 1開発効率化のため一時無効化 2026-05-05) |
+| **Phase 1** | ⏸️ OFF - Disabled to reduce merge friction during Phase 1 development |
+| **Phase 2+** | ✅ ON - Re-enable with team role refinement |
+| **Action Required** | ✅ MONITOR - Status change only; other 11 rules remain active |
+| **詳細設定** | 👉 **[2.5-A～2.5-B を参照](#2-5-restrict-updates-detailed)** |
 
-**注記**: GitHub の最新 UI では「Restrict updates」という項目が、「Create」と「Delete」の制限を統合した形で実装されています。
+**注記**: GitHub の最新 UI では「Restrict updates」という項目が、「Create」と「Delete」の制限を統合した形で実装されています。Phase 1 開発効率化のため、このルールは一時的に無効化されています（2026-05-05）。
 
 ---
 
@@ -431,15 +431,36 @@ Use this checklist when configuring branch ruleset in GitHub UI. This is the **s
 
 ---
 
-#### 2.5. Restrict updates
+#### 2.5. Restrict updates {#2-5-restrict-updates-detailed}
 
+**Phase 1 Status (2026-05-05)**: ⏸️ DISABLED
+
+```
+☐ Disable this rule (temporarily for Phase 1)
+  
+Status: OFF - No bypass actors configured
+Reason: Reduces merge friction during solo-developer Phase 1
+Rationale: 
+  - Single developer working on feature/documentation branches
+  - Main branch protection maintained via other 11 rules
+  - Will re-enable in Phase 2 when team members join
+```
+
+**Previous Configuration** (active until 2026-05-05):
 ```
 ☑ Enable this rule
   ↓ Bypass list
     - ☑ Repository Role: admin (allows admins only to update/push)
 ```
 
-**GitHub UI Path**: Rules → "Restrict updates" → ☑ Enable → Bypass actors → Add "Repository Role: admin"
+**GitHub UI Path** (if re-enabling in Phase 2): 
+Rules → "Restrict updates" → ☑ Enable → Bypass actors → Add "Repository Role: admin"
+
+**Implementation Notes**:
+- **2026-05-05**: Rule disabled to streamline Phase 1 development PR merge process
+- **Remaining Protections**: Items 1-4, 7, 10 remain active (no direct main pushes allowed)
+- **Phase 2 Re-enablement**: Planned when multiple team members join (estimated 2026-05-16+)
+- **Risk Assessment**: LOW - Other critical rules (PR required, code review, force push block) still enforce quality gates
 
 ---
 
@@ -1428,6 +1449,9 @@ jobs:
 | Date | Version | Change | Author |
 |------|---------|--------|--------|
 | 2026-05-05 | 1.0 | Initial comprehensive ruleset guide (all 12 items + details) | Claude Code |
+| 2026-05-05 | 1.0+ | Item 2.5 "Restrict updates" disabled (OFF) for Phase 1 development | User |
+| | | Rationale: Reduce merge friction during solo-dev phase; other 11 rules remain active | |
+| | | Status: Monitoring; scheduled re-enable for Phase 2 (2026-05-16+) | |
 | (planned) | 1.1 | Phase 1 validation after 2026-05-15 | — |
 | (planned) | 2.0 | Phase 2 rollout (team expansion) | — |
 
