@@ -143,33 +143,57 @@ target_branches:
 
 ---
 
-### 2. Restrict who can create matching branches
+### 2. Restrict creations
 
 | Item | Value |
 |------|-------|
-| **English Name** | Restrict who can create matching branches |
-| **日本語名** | 対象ブランチの作成権限を制限 |
+| **English Name (GitHub UI)** | Restrict creations |
+| **ドキュメント上の項目** | Item 2: Restrict who can create matching branches |
+| **日本語名** | ブランチ作成権限を制限 |
 | **概要** | Main ブランチの直接作成を禁止し、スクリーニング経由に限定 |
-| **Current Setting** | ❌ OFF (Not yet configured) |
+| **Current Setting** | ✅ ON (実装済み 2026-05-05) |
 | **Phase 1** | ✅ ON - Restrict to repository admins only |
 | **Phase 2+** | ✅ ON - Extend to release-manager role |
-| **Action Required** | ✅ YES - Configure in Phase 1 setup |
-| **詳細設定** | 👉 **[2-A～2-B を参照](#2-restrict-who-can-create-detailed)** |
+| **Action Required** | ✅ YES - Already configured in Phase 1 ✓ |
+| **詳細設定** | 👉 **[2-A～2-B を参照](#2-restrict-creations-detailed)** |
+
+**注記**: GitHub UI では「Restrict creations」と表示されます（ドキュメント作成時は「Restrict who can create」でしたが、UI 更新により統合）
 
 ---
 
-### 3. Restrict who can delete matching branches
+### 2.5. Restrict updates (GitHub UI 統合項目)
 
 | Item | Value |
 |------|-------|
-| **English Name** | Restrict who can delete matching branches |
-| **日本語名** | 対象ブランチの削除権限を制限 |
+| **English Name (GitHub UI)** | Restrict updates |
+| **ドキュメント上** | Item 2 + Item 3 の統合 |
+| **日本語名** | ブランチ更新権限を制限 |
+| **概要** | Branch への更新（push）を制限し、bypass permission を持つユーザーのみ許可 |
+| **Current Setting** | ✅ ON (実装済み 2026-05-05) |
+| **Phase 1** | ✅ ON - Restrict to repository admins |
+| **Phase 2+** | ✅ ON - Refine based on team roles |
+| **Action Required** | ✅ YES - Already configured in Phase 1 ✓ |
+| **詳細設定** | 制限の詳細は Item 1 と同様（bypass actors） |
+
+**注記**: GitHub の最新 UI では「Restrict updates」という項目が、「Create」と「Delete」の制限を統合した形で実装されています。
+
+---
+
+### 3. Restrict deletions
+
+| Item | Value |
+|------|-------|
+| **English Name (GitHub UI)** | Restrict deletions |
+| **ドキュメント上の項目** | Item 3: Restrict who can delete matching branches |
+| **日本語名** | ブランチ削除権限を制限 |
 | **概要** | Main ブランチの削除を最小限の人数（管理者）に限定 |
-| **Current Setting** | ❌ OFF (Not yet configured) |
+| **Current Setting** | ✅ ON (実装済み 2026-05-05) |
 | **Phase 1** | ✅ ON - Restrict to repository admins only |
 | **Phase 2+** | ✅ ON - Require explicit approval logging |
-| **Action Required** | ✅ YES - Configure in Phase 1 setup |
-| **詳細設定** | 👉 **[3-A～3-B を参照](#3-restrict-who-can-delete-detailed)** |
+| **Action Required** | ✅ YES - Already configured in Phase 1 ✓ |
+| **詳細設定** | 👉 **[3-A～3-B を参照](#3-restrict-deletions-detailed)** |
+
+**注記**: GitHub UI では「Restrict deletions」と表示されます（ドキュメント作成時は「Restrict who can delete」でしたが、UI 更新により統合）
 
 ---
 
@@ -330,6 +354,218 @@ target_branches:
 **Phase 1 Mandatory (P0)**: Items 1, 2, 3, 4, 7, 10  
 **Phase 1 Optional (P1-P2)**: Items 5, 8, 9, 11  
 **Phase 1 Defer (P3)**: Items 6, 12
+
+---
+
+## ✅ GitHub UI Checklist – Phase 1 Implementation
+
+Use this checklist when configuring branch ruleset in GitHub UI. This is the **single source of truth** for which settings to enable.
+
+### 🎯 Target Branches Configuration (Step 1)
+
+**Location**: GitHub → Repository → Settings → Rules → Branch rulesets → Create branch ruleset
+
+| Setting | Phase 1 | ✅ Checklist |
+|---------|---------|------------|
+| **Ruleset Name** | `main-branch-protection` | ☑ Create with this name |
+| **Target branches** | Include default branch | ☑ Check "Include default branch" |
+| **Enforcement level** | Enforce | ☑ Select "Enforce" |
+
+---
+
+### 🔐 Core Rules Configuration (Step 2)
+
+**Location**: GitHub → [Ruleset name] → Rules section
+
+| # | Rule Name (GitHub UI) | Phase 1 | ✅ Enable | ❌ Disable |
+|---|----------------------|---------|---------|-----------|
+| **1** | Restrict who can push to matching branches | ✅ ON | ☑ | |
+| **2** | Restrict creations | ✅ ON | ☑ | |
+| **2.5** | Restrict updates | ✅ ON | ☑ | |
+| **3** | Restrict deletions | ✅ ON | ☑ | |
+| **4** | Require linear history | ✅ ON | ☑ | |
+| **5** | Require deployments to succeed before merging | ⏳ Optional | ☐ | ☐ |
+| **6** | Require signed commits | ❌ OFF | | ☑ |
+| **7** | Require a pull request before merging | ✅ ON | ☑ | |
+| **8** | Require status checks to pass before merging | ⏳ Optional | ☐ | ☐ |
+| **9** | Require code reviews before merging | ✅ ON | ☑ | |
+| **10** | Block force pushes | ✅ ON | ☑ | |
+| **11** | Require code scanning results before merging | ⏳ Optional | ☐ | ☐ |
+| **12** | Require Copilot Enterprise review before merging | ❌ OFF | | ☑ |
+
+**Summary for Phase 1 Mandatory (Must enable)**:
+- ✅ Item 1: Restrict who can push (with bypass = admins only)
+- ✅ Item 2: Restrict creations (admins only)
+- ✅ Item 2.5: Restrict updates (admins only)
+- ✅ Item 3: Restrict deletions (admins only)
+- ✅ Item 4: Require linear history
+- ✅ Item 7: Require PR before merging (1 approval minimum)
+- ✅ Item 9: Require code reviews (1 approval minimum)
+- ✅ Item 10: Block force pushes (no exceptions)
+
+---
+
+### ⚙️ Configuration Details by Rule (Step 3)
+
+#### 1. Restrict who can push to matching branches
+
+```
+☑ Enable this rule
+  ↓ Bypass list
+    - ☑ Repository Role: admin (allows admins only)
+```
+
+**GitHub UI Path**: Rules → "Restrict who can push to matching branches" → ☑ Enable → Bypass actors → Add "Repository Role: admin"
+
+---
+
+#### 2. Restrict creations
+
+```
+☑ Enable this rule
+  ↓ Bypass list
+    - ☑ Repository Role: admin (allows admins only to create branches)
+```
+
+**GitHub UI Path**: Rules → "Restrict creations" → ☑ Enable → Bypass actors → Add "Repository Role: admin"
+
+---
+
+#### 2.5. Restrict updates
+
+```
+☑ Enable this rule
+  ↓ Bypass list
+    - ☑ Repository Role: admin (allows admins only to update/push)
+```
+
+**GitHub UI Path**: Rules → "Restrict updates" → ☑ Enable → Bypass actors → Add "Repository Role: admin"
+
+---
+
+#### 3. Restrict deletions
+
+```
+☑ Enable this rule
+  ↓ Bypass list
+    - ☑ Repository Role: admin (allows admins only to delete)
+```
+
+**GitHub UI Path**: Rules → "Restrict deletions" → ☑ Enable → Bypass actors → Add "Repository Role: admin"
+
+---
+
+#### 4. Require linear history
+
+```
+☑ Enable this rule
+```
+
+**GitHub UI Path**: Rules → "Require linear history" → ☑ Enable
+
+**Note**: This enforces squash-or-rebase merging. Combined with repository settings (see Step 4).
+
+---
+
+#### 7. Require a pull request before merging
+
+```
+☑ Enable this rule
+  ↓ Required approvals: 1
+  ↓ Dismiss stale approvals: ☑ (ON)
+  ↓ Require approval of most recent push: ☑ (ON)
+  ↓ Require review from code owners: ☐ (OFF for Phase 1)
+  ↓ Require conversation resolution: ☑ (ON)
+```
+
+**GitHub UI Path**: Rules → "Require a pull request before merging" → ☑ Enable → Configure:
+- Approvals required: `1`
+- ☑ Dismiss stale pull request approvals
+- ☑ Require approval of most recent push
+- ☐ Require review from code owners
+- ☑ Require all conversations to be resolved
+
+---
+
+#### 9. Require code reviews before merging
+
+```
+☑ Enable this rule
+  ↓ Number of reviews: 1
+  ↓ Restrict who can approve: ☐ (OFF)
+  ↓ Require code owner reviews: ☐ (OFF for Phase 1)
+```
+
+**GitHub UI Path**: Rules → "Require code reviews before merging" → ☑ Enable → Configure:
+- Number of approving reviews: `1`
+- ☐ Restrict who can approve reviews (leave OFF)
+- ☐ Require review from code owners
+
+---
+
+#### 10. Block force pushes
+
+```
+☑ Enable this rule
+  ↓ Apply to admins: ☑ (YES - no exceptions)
+```
+
+**GitHub UI Path**: Rules → "Block force pushes" → ☑ Enable
+
+---
+
+### 🎨 Repository Merge Settings (Step 4)
+
+**Separate from Branch Ruleset** — Configure merge button options for consistency with linear history rule.
+
+**Location**: GitHub → Repository Settings → General → Pull Requests → Merge button
+
+```
+☑ Allow squash merging (REQUIRED for Phase 1)
+☐ Allow merge commits (MUST DISABLE)
+☐ Allow rebase merging (optional; enable in Phase 2 if desired)
+
+Default merge method: Squash and merge
+☑ Default to PR title for commit message
+☑ Default to PR title and description
+```
+
+**Why**: Linear history rule requires commits to be merged via squash or rebase. Enabling "Allow merge commits" will conflict with this rule.
+
+---
+
+### 📋 Phase 1 Implementation Checklist
+
+Use this to verify all settings are correctly configured:
+
+**Target Branch Setup**:
+- [ ] Ruleset name is `main-branch-protection`
+- [ ] "Include default branch" is checked
+- [ ] Enforcement level is set to "Enforce"
+
+**Core Rules (Mandatory - Enable All)**:
+- [ ] Item 1: Restrict who can push (✅ ON, bypass = admin)
+- [ ] Item 2: Restrict creations (✅ ON, bypass = admin)
+- [ ] Item 2.5: Restrict updates (✅ ON, bypass = admin)
+- [ ] Item 3: Restrict deletions (✅ ON, bypass = admin)
+- [ ] Item 4: Require linear history (✅ ON)
+- [ ] Item 7: Require PR (✅ ON, 1 approval, dismiss stale ✓, require latest ✓, resolution ✓)
+- [ ] Item 9: Require code reviews (✅ ON, 1 review)
+- [ ] Item 10: Block force pushes (✅ ON, no exceptions)
+
+**Deferred Rules (Keep Disabled)**:
+- [ ] Item 6: Require signed commits (❌ OFF)
+- [ ] Item 12: Require Copilot review (❌ OFF)
+
+**Repository Merge Settings**:
+- [ ] Allow squash merging: ☑ (checked)
+- [ ] Allow merge commits: ☐ (unchecked)
+- [ ] Default merge method: "Squash and merge"
+
+**Verification**:
+- [ ] All checkboxes completed
+- [ ] Create test PR to verify restrictions work
+- [ ] Confirm branch push/create/delete restrictions apply
 
 ---
 
