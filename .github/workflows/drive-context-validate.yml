@@ -1,0 +1,99 @@
+name: Drive Context Validate
+
+on:
+  pull_request:
+    paths:
+      - "docs/*.txt"
+      - "DRIVE_SYNC_STATUS.md"
+      - ".github/workflows/drive-context-validate.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/*.txt"
+      - "DRIVE_SYNC_STATUS.md"
+      - ".github/workflows/drive-context-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-context:
+    name: Validate context files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate docs context files
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          import sys
+
+          required_files = {
+              "docs/SHARED_SOURCE.txt": [
+                  "Google Drive",
+                  "SSOT",
+                  ".txt",
+                  "AGENTS.md.txt",
+              ],
+              "docs/AGENTS.md.txt": [
+                  "Phase 1 GitHub",
+                  "GitHub Actions",
+                  "Codex",
+                  "LOM",
+                  "DRIVE_SYNC_STATUS.md",
+              ],
+              "docs/CODEX_WORKFLOW.md.txt": [
+                  "Phase 1 GitHub Actions",
+                  "GitHub Actions YAML",
+                  "Drive / GitHub",
+                  "UTF-8",
+              ],
+          }
+
+          escaped_markdown = re.compile(r"\\[#*=`\[\]\(\)-]")
+          mojibake_markers = ("ð", "縺", "繝", "譁", "蜿")
+          failures = []
+
+          for file_name, keywords in required_files.items():
+              path = Path(file_name)
+              if not path.is_file():
+                  failures.append(f"{file_name}: missing")
+                  continue
+
+              data = path.read_bytes()
+              if data.startswith(b"\xef\xbb\xbf"):
+                  failures.append(f"{file_name}: UTF-8 BOM should not be present")
+
+              try:
+                  text = data.decode("utf-8")
+              except UnicodeDecodeError as exc:
+                  failures.append(f"{file_name}: invalid UTF-8 ({exc})")
+                  continue
+
+              if escaped_markdown.search(text):
+                  failures.append(f"{file_name}: escaped Markdown markers remain")
+
+              for marker in mojibake_markers:
+                  if marker in text:
+                      failures.append(f"{file_name}: possible mojibake marker remains: {marker}")
+
+              for keyword in keywords:
+                  if keyword not in text:
+                      failures.append(f"{file_name}: missing required keyword: {keyword}")
+
+              if len(text.strip()) < 500:
+                  failures.append(f"{file_name}: content is unexpectedly short")
+
+          if failures:
+              print("Context validation failed:")
+              for failure in failures:
+                  print(f"- {failure}")
+              sys.exit(1)
+
+          print("Context validation passed.")
