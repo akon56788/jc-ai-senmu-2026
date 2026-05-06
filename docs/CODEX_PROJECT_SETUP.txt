@@ -1,0 +1,108 @@
+【Codex】ローカルプロジェクトセットアップガイド
+=============================================
+
+**Last Updated:** 2026-05-05
+**Scope:** Codex ローカル環境初期セットアップ、ディレクトリ構成、Drive 同期ルール
+
+---
+
+## ローカルプロジェクト推奨構成
+
+```
+codex-jc-ai-tools/
+ │
+ ├── context/
+ │   ├── SHARED_SOURCE.txt
+ │   ├── CLAUDE_enhanced.md
+ │   ├── AGENTS.md.txt
+ │   ├── CODEX_WORKFLOW.md.txt
+ │   └── CODEX_PROJECT_SETUP.txt
+ │
+ ├── outputs/
+ │   └── [成果物ファイル]
+ │
+ ├── scratch/
+ │   └── [一時ファイル、Drive 非同期]
+ │
+ ├── templates/
+ │   ├── lom_base_template.xlsx
+ │   └── word_form_template.docx
+ │
+ └── README.md
+```
+
+---
+
+## ディレクトリ別の役割
+
+### `context/` — Google Drive コンテキストファイル群
+
+| ファイル | 更新頻度 |
+|---------|---------|
+| SHARED_SOURCE.txt | 稀（方針変更時） |
+| CLAUDE_enhanced.md | 月 1 回 |
+| AGENTS.md.txt | 年 1 回程度 |
+| CODEX_WORKFLOW.md.txt | 四半期ごと |
+| CODEX_PROJECT_SETUP.txt | 年 1 回程度 |
+
+### `outputs/` — 成果物フォルダ
+- `_draft`：ローカルのみ（Drive にはアップロードしない）
+- `_final`：Drive にアップロード（ユーザー確認後）
+
+### `scratch/` — 一時作業フォルダ
+- `.gitignore` で除外推奨
+- Drive に同期しない
+
+### `templates/` — テンプレート基盤フォルダ
+- テンプレート修正は必ず `templates/` で行う
+- 修正後、`outputs/` に `_draft` 版をコピーして検証
+
+---
+
+## セットアップ手順（初回のみ）
+
+### 1. ディレクトリ作成
+```bash
+mkdir -p codex-jc-ai-tools/{context,outputs,scratch,templates}
+cd codex-jc-ai-tools
+```
+
+### 2. Google Drive から context ファイル取得
+Drive の「専務理事対応（AI活用）」フォルダから以下の5ファイルをダウンロードして `context/` に保存：
+- SHARED_SOURCE.txt
+- CLAUDE_enhanced.md
+- AGENTS.md.txt
+- CODEX_WORKFLOW.md.txt
+- CODEX_PROJECT_SETUP.txt
+
+### 3. テンプレート取得
+Drive から `lom_base_template.xlsx`、`word_form_template.docx` を `templates/` に保存
+
+### 4. Git 初期化（Phase 1 向け準備）
+```bash
+git init
+echo "scratch/" > .gitignore
+git add .
+git commit -m "Initial setup: context files, templates, directory structure"
+```
+
+---
+
+## ファイル同期ルール
+
+| ファイル種別 | Drive 同期 | 更新タイミング |
+|-----------|----------|-------------|
+| context ファイル | ✅ Yes | 毎月（Drive 更新時） |
+| テンプレート基盤 | ✅ Yes | 四半期ごと |
+| 成果物（_final） | ✅ Yes | タスク完了時 |
+| 成果物（_draft） | ❌ No | 作業中 |
+| 一時ファイル | ❌ No | 随時削除可 |
+
+---
+
+## 📋 更新履歴
+
+| バージョン | 日付 | 変更内容 | 担当 |
+|-----------|------|----------|------|
+| v1.1 | 2026-05-06 | Cowork ローカル同期。要点整理版として再構成 | Cowork |
+| v1.0 | 2026-05-05 | 初版作成（Drive .txt形式で配置） | Code |
