@@ -108,19 +108,31 @@ CODE 担当 (7 files):
 ### 🔍 Codex（Claude Codex）
 
 **責務:**
-- Code のサポート・分析・レビュー
-- Codex 担当 6 ファイル（VISION, CODEX_*, notion_poc_design など）の更新
-- GitHub 上のコード・ドキュメント分析
-- Notion への Codex-specific 情報提供（種別 2 のサポート）
+1. **Code のサポート・分析・レビュー**
+   - GitHub 上のコード・ドキュメント分析
+   - Code の実装案レビュー
+   - Notion への Codex-specific 情報提供
+
+2. **全体プロジェクト PMO 役（エージェント PM）**
+   - **3 つのカテゴリ全体の進捗監視** → Code・Cowork・Chat の連携確認
+   - **ツール間の連携リスク検出** → Code と Cowork の連動漏れ、Notion 更新遅延など
+   - **SSOT 同期の健全性監視** → Drive ↔ GitHub 差分がないか定期チェック
+   - **進捗ボトルネック検出** → どのタスク・ツールが止まっているか
+   - **全体進捗レポート** → 週次・月次で Code・Cowork に報告
+
+3. **Codex 担当 6 ファイルの更新・管理**
 
 **参照ドキュメント:**
 - [`CLAUDE.md`](../.claude/projects/jc-ai-senmu-2026/CLAUDE.md) ← **Code と共通**
 - [`CODEX_WORKFLOW.md.txt`](CODEX_WORKFLOW.md.txt)
 - [`VISION.md`](VISION.md)
+- [`MANIFEST`](https://docs.google.com/document/d/1I1RDFgfo90ZqYIhPnTZukrl3D70gjFy2WOWC2MHpdb4) ← **PMO 役として全体監視**
 
 **特に重要:**
+- **PMO 視点**: 毎セッション、Code・Cowork の進捗・連携状況を整理・報告
 - Code が GitHub → Drive 同期を実行する際、Codex も同時にスクリプト実行可能
 - Codex 担当ファイルを更新したら `python github_to_drive_sync_batch.py --tool Codex` で自動同期
+- **リスク検出時は即座に Code・Cowork に通知**（ボトルネック・遅延など）
 
 **ファイル責務:**
 ```
@@ -133,31 +145,63 @@ CODEX 担当 (6 files):
   - codex_context_latest.txt
 ```
 
+**PMO チェックリスト（毎セッション）:**
+- [ ] Code の GitHub 更新 → Drive 同期が実行されたか
+- [ ] Cowork の Notion 更新は Code の作業と同期しているか
+- [ ] Drive ↔ GitHub に差分がないか（SSOT 健全性）
+- [ ] 各ツール間の競合・重複がないか
+- [ ] ボトルネックはないか（タスク停止・進捗遅延）
+
 ---
 
 ### 📊 Cowork（Claude Cowork）
 
 **責務:**
-- Notion での進捗管理（種別 1・2）
-- GitHub・Drive SSOT の進捗監視（Read-only）
-- ツール間の競合検出・調整
-- 進捗レポーティング
+1. **Notion での進捗管理（種別 1・2 のみ）**
+   - 専務プロジェクト（種別 1）の Notion 登録・更新・完了マーク
+   - 専務タスク（種別 2）の Notion 登録・進捗追跡・完了マーク
+   - Phase 進捗の可視化・ダッシュボード管理
+
+2. **GitHub・Drive SSOT の整備サポート**
+   - Code からの SSOT 同期実行のサポート（ドキュメント確認・確認依頼など）
+   - GitHub ↔ Drive 同期後の動作確認
+   - 新規ドキュメント追加時の Drive・GitHub への配置サポート
+
+3. **チーム連携の調整**
+   - Code・Codex の進捗状況を把握・調整
+   - Codex の PMO レポートを受けて対応（ボトルネック解決など）
+   - ツール間の情報連携の確認
 
 **参照ドキュメント:**
-- [`CLAUDE.md`](../.claude/projects/jc-ai-senmu-2026/CLAUDE.md) ← 種別 1・2 定義
-- [`GITHUB_DRIVE_SYNC_WORKFLOW.md`](GITHUB_DRIVE_SYNC_WORKFLOW.md) ← 競合回避ルール
+- [`CLAUDE.md`](../.claude/projects/jc-ai-senmu-2026/CLAUDE.md) ← **種別 1・2 定義（最重要）**
+- [`MANIFEST`](https://docs.google.com/document/d/1I1RDFgfo90ZqYIhPnTZukrl3D70gjFy2WOWC2MHpdb4) ← SSOT ファイル一覧・Drive ID
+- [`GITHUB_DRIVE_SYNC_WORKFLOW.md`](GITHUB_DRIVE_SYNC_WORKFLOW.md) ← 同期ワークフロー
 
 **特に重要:**
-- Code・Codex が同じファイルを同時編集しないよう監視
-- GitHub・Drive の差分を定期的に確認
-- Notion に Phase 進捗を記録
+- **種別 3（環境開発）は Notion に登録しない** → GitHub Issues か Chat スレッド内で管理
+- Code・Codex が同じファイルを同時編集しないよう監視（Codex の PMO 報告から）
+- Codex の PMO レポートから「ボトルネック・リスク検出」を受けたら即座に対応
 
 **権限:**
 ```
-✅ Read: GitHub・Drive 全ファイル
-✅ Write: Notion プロジェクト管理
-❌ Write: GitHub リポジトリ
-❌ Write: Drive SSOT ファイル（直接編集禁止）
+✅ Read: GitHub・Drive 全ファイル（監視用）
+✅ Write: Notion プロジェクト・タスク管理
+✅ Write: Notion リンク追加（ドキュメント参照用）
+❌ Write: GitHub リポジトリ（Read-only）
+❌ Write: Drive SSOT ファイル（直接編集禁止 ← スクリプト経由のみ）
+```
+
+**Notion 管理範囲:**
+```
+✅ 種別 1: 専務プロジェクト
+  例) あきる野青年会議所「専務理事対応（AI活用）」
+  
+✅ 種別 2: 専務タスク（プロジェクト外）
+  例) 月次レポート、委員会資料作成
+
+❌ 種別 3: 環境開発・ツール改善
+  例) GitHub Actions 整備、SSOT 標準化
+  → これは GitHub Issues または Chat スレッド内で管理
 ```
 
 ---
