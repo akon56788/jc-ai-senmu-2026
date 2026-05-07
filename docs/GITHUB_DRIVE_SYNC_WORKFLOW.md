@@ -167,6 +167,41 @@ Drive API の `modifiedTime` フィールドで最終更新日時を記録：
 
 ---
 
+## 📋 コンテクストファイル更新フロー（Phase 4.5+）
+
+コンテクストファイル（CONTEXT_FOR_*.md など）を更新する場合は、以下の **逆順フロー** を採用：
+
+### ステップ 1: Drive SSOT に先に作成・更新
+```
+1.1 Drive SSOT フォルダ内で Google Docs として作成 OR 既存ドキュメント更新
+1.2 Drive ID・webViewLink を確認
+1.3 リンクをコピー
+```
+
+### ステップ 2: GitHub にローカルファイル作成・更新
+```
+2.1 ローカル docs/ フォルダにマークダウンファイル作成
+2.2 git add / git commit
+2.3 git push origin main
+```
+
+### ステップ 3: 各ツール向け依頼分作成
+```
+3.1 Drive リンク付きコピペ用依頼分を作成
+3.2 リンク形式: 番号 + 日本語説明 + URL（自動リンク化防止）
+3.3 例:
+    **1. TOOL_CONTEXT_GUIDE (メインコンテクスト)**
+    https://docs.google.com/document/d/1mgnZq9d9__wi5GiUVGSaiFJw5GeBMwMa-plP1sXmr3k/edit
+```
+
+### ステップ 4: Drive 複製ファイル同期（オプション）
+```
+4.1 ローカルファイルを Drive 複製ファイルに同期（必要に応じて）
+4.2 python github_to_drive_sync_batch.py --tool [Code/Codex]
+```
+
+---
+
 ## 📝 次のステップ
 
 1. **自動化**: GitHub Actions で自動 sync を検討（Phase 2）

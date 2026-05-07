@@ -243,6 +243,35 @@ CODEX 担当 (6 files):
 
 ---
 
+## 📋 ツール間連携・共有ルール（Phase 4.5+）
+
+### コンテクストファイル更新時の共通フロー
+
+コンテクストファイル（CONTEXT_FOR_*.md など）を更新する際は、以下のルールを統一適用：
+
+**優先順序:**
+1. **Drive SSOT に先に作成・更新** → Drive ID・リンク確認
+2. **ローカル docs/ に GitHub ファイル作成** → git commit/push
+3. **各ツール向け依頼分にリンク張る** → 形式統一（番号 + 日本語説明）
+4. **Drive 複製ファイル同期**（必要に応じて）
+
+**リンク形式の統一:**
+- 自動リンク化防止のため、「番号 + 日本語説明 + URL」形式
+- 例：
+  ```
+  **1. TOOL_CONTEXT_GUIDE (メインコンテクスト)**
+  https://docs.google.com/document/d/1mgnZq9d9__wi5GiUVGSaiFJw5GeBMwMa-plP1sXmr3k/edit?usp=drivesdk
+  ```
+
+**目的:**
+- 各ツールが確実に Drive SSOT リンクにアクセス可能にする
+- 並行作業時の SSOT 一貫性を保証
+- ファイル名の自動リンク化による表示破損を防止
+
+詳細: [`GITHUB_DRIVE_SYNC_WORKFLOW.md`](GITHUB_DRIVE_SYNC_WORKFLOW.md#-コンテクストファイル更新フロー)
+
+---
+
 ## 📌 次ステップ（Phase 5+）
 
 - [ ] GitHub Actions による自動同期の検討（現在はスクリプト手動実行）
