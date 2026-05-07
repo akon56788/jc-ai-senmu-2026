@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - "docs/*.txt"
+      - "docs/*.md"
+      - "scripts/*.py"
+      - "reviews/*.md"
       - "DRIVE_SYNC_STATUS.md"
       - ".github/workflows/drive-context-validate.yml"
   push:
@@ -11,6 +14,9 @@ on:
       - main
     paths:
       - "docs/*.txt"
+      - "docs/*.md"
+      - "scripts/*.py"
+      - "reviews/*.md"
       - "DRIVE_SYNC_STATUS.md"
       - ".github/workflows/drive-context-validate.yml"
   workflow_dispatch:
@@ -53,6 +59,30 @@ jobs:
                   "GitHub Actions YAML",
                   "Drive / GitHub",
                   "UTF-8",
+              ],
+              "docs/TOOL_CONTEXT_GUIDE.md": [
+                  "Agent PMO",
+                  "ChatGPT",
+                  "Gemini",
+                  "external_review.py",
+              ],
+              "docs/CONTEXT_FOR_CODEX.md": [
+                  "Agent PMO",
+                  "ChatGPT",
+                  "Gemini",
+                  "External Review",
+              ],
+              "docs/CONTEXT_FOR_CHATGPT.md": [
+                  "ChatGPT",
+                  "外部レビュー",
+                  "Blocker",
+                  "No issue",
+              ],
+              "docs/EXTERNAL_REVIEW_WORKFLOW.md": [
+                  "External Review",
+                  "Gemini CLI",
+                  "ChatGPT",
+                  "scripts/external_review.py",
               ],
           }
 
@@ -97,3 +127,6 @@ jobs:
               sys.exit(1)
 
           print("Context validation passed.")
+
+      - name: Validate external review script syntax
+        run: python -m py_compile scripts/external_review.py
