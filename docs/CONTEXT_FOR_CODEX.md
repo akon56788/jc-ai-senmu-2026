@@ -100,6 +100,29 @@ Codex は Agent PMO に加えて、Code・Cowork・Chat のサブ担当として
 
 ---
 
+### 5️⃣ ChatGPT / Gemini 外部レビュー連携（半自動）
+Codex は PMO として、重要変更時に ChatGPT または Gemini へ客観レビューを依頼できます。特に、ツール間ロール、SSOT 同期、GitHub / Drive / Notion 連携、GitHub Actions、運用ルール変更ではレビュー対象にします。
+
+**基本方針:**
+- ChatGPT / Gemini は外部レビュアーであり、最終判断者ではない
+- 期待する観点は、抜け漏れ、矛盾、過剰設計、リスク、ユーザー負担、運用破綻可能性
+- Codex がレビュー依頼文を作り、結果を PMO として要約・分類する
+- まずは半自動、将来は PR / Actions 連動へ拡張する
+
+**半自動コマンド:**
+```powershell
+python scripts/external_review.py --target docs/CONTEXT_FOR_CODEX.md --question "PMO role and handoff risk review"
+python scripts/external_review.py --target docs/CONTEXT_FOR_CODEX.md --question "PMO role and handoff risk review" --run-gemini
+```
+
+**レビュー結果の扱い:**
+- `Blocker`: 反映前に修正・再確認
+- `Risk`: PMO レポートで明示し、必要なら軽微修正
+- `Suggestion`: 余力があれば反映
+- `No issue`: そのまま進行可能
+
+---
+
 ## 🔍 Agent PMO チェックリスト（毎セッション記入）
 
 毎回のセッション開始時に、以下を確認して簡潔に報告してください：
@@ -124,6 +147,16 @@ Codex は Agent PMO に加えて、Code・Cowork・Chat のサブ担当として
 [あれば記述]
 ```
 
+GitHub / Drive / Notion / SSOT 更新が絡む詳細チェック時は、必要に応じて以下も追加：
+
+```markdown
+**External Review:**
+- Reviewer: Gemini / ChatGPT / N/A
+- Status: Not needed / Requested / Completed / Blocked
+- Result: Blocker / Risk / Suggestion / No issue
+- Follow-up: [action or none]
+```
+
 ---
 
 ## 🛠️ 参照スクリプト
@@ -138,21 +171,33 @@ python github_to_drive_sync_batch.py --tool Codex
 python github_to_drive_sync.py --file [filename] --drive-id [id]
 ```
 
+**外部レビュー依頼生成:**
+```bash
+python scripts/external_review.py --target docs/TOOL_CONTEXT_GUIDE.md --question "Review this PMO / SSOT change"
+```
+
+**Gemini CLI で半自動レビュー:**
+```bash
+python scripts/external_review.py --target docs/TOOL_CONTEXT_GUIDE.md --question "Review this PMO / SSOT change" --run-gemini
+```
+
 詳細: [`GITHUB_DRIVE_SYNC_WORKFLOW.md`](../docs/GITHUB_DRIVE_SYNC_WORKFLOW.md)
+外部レビュー詳細: [`EXTERNAL_REVIEW_WORKFLOW.md`](../docs/EXTERNAL_REVIEW_WORKFLOW.md)
 
 ---
 
 ## 📋 役割の枠組み
 
-| 責務 | Codex | Code | Cowork | Chat |
-|------|-------|------|--------|------|
-| **GitHub リード** | — | ✅ | — | — |
-| **分析・レビュー** | ✅ | — | — | △ |
-| **PMO 監視** | ✅ | — | — | — |
-| **補完・代替実行** | ✅ | △ | △ | △ |
-| **Notion 管理** | — | △ | ✅ | — |
-| **SSOT 管理** | △ | ✅ | △ | — |
-| **プロジェクト質問** | — | △ | △ | ✅ |
+| 責務 | Codex | Code | Cowork | Chat | ChatGPT / Gemini |
+|------|-------|------|--------|------|------------------|
+| **GitHub リード** | — | ✅ | — | — | — |
+| **分析・レビュー** | ✅ | — | — | △ | ✅ |
+| **PMO 監視** | ✅ | — | — | — | — |
+| **補完・代替実行** | ✅ | △ | △ | △ | — |
+| **外部客観レビュー** | 依頼・要約 | △ | △ | △ | ✅ |
+| **Notion 管理** | — | △ | ✅ | — | — |
+| **SSOT 管理** | △ | ✅ | △ | — | — |
+| **プロジェクト質問** | — | △ | △ | ✅ | △ |
 
 ---
 
@@ -189,6 +234,15 @@ python github_to_drive_sync.py --file [filename] --drive-id [id]
 4. 主担当へ引き継ぎ、必要ならユーザーへ PMO レポートで報告
 ```
 
+### パターン E: 重要変更の外部レビュー時
+```
+1. Codex が SSOT / PMO / GitHub / Drive / Notion に関わる重要変更を検出
+2. scripts/external_review.py でレビュー依頼文を生成
+3. Gemini CLI が使える場合は --run-gemini、なければ ChatGPT / Gemini へ手動共有
+4. 結果を Blocker / Risk / Suggestion / No issue に分類
+5. 必要なら修正、PR コメント、PMO レポート、SSOT 更新に反映
+```
+
 ---
 
 ## 🚀 まとめ
@@ -200,6 +254,7 @@ Codex さんの新しい役割 = **Agent PMO + Code / Cowork / Chat の補完担
 - 問題を早期に検出して報告
 - プロジェクトが滞らないようにサポート
 - Token 不足・並行業務時は、一時的なサブ担当として検証・整理・保管・引き継ぎを実行
+- 重要変更時は ChatGPT / Gemini に外部レビューを依頼し、客観的なリスク確認を PMO 報告に組み込む
 
 **期待値:** 毎セッション、簡潔な PMO 報告（3行程度でOK）
 

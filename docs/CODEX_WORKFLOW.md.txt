@@ -148,6 +148,29 @@ Codex が Code または Cowork の代わりに確認・実行した場合、完
 3. ローカルで記録（scratch/ に作業メモを保存、後で削除可）
 ```
 
+### Step 7. 外部レビュー（必要時・半自動）
+
+重要変更では、Codex PMO が ChatGPT / Gemini に客観レビューを依頼できます。
+
+対象例：
+- PMO ロール、ツール分担、引き継ぎルールの変更
+- GitHub ↔ Drive SSOT 同期ルールの変更
+- GitHub Actions、CLI、同期スクリプトなど自動化の追加
+- Notion / Drive / GitHub の連携に影響する変更
+
+```powershell
+python scripts/external_review.py --target docs/TOOL_CONTEXT_GUIDE.md --question "PMO / SSOT rule risk review"
+python scripts/external_review.py --target docs/TOOL_CONTEXT_GUIDE.md --question "PMO / SSOT rule risk review" --run-gemini
+```
+
+レビュー結果は以下で扱います：
+- `Blocker`: 反映前に修正・再確認
+- `Risk`: PMO レポートに明記し、必要なら軽微修正
+- `Suggestion`: 任意反映
+- `No issue`: そのまま進行可能
+
+外部レビューは助言であり、最終判断・GitHub / Drive / Notion 反映は Codex / Code / Cowork / Chat とユーザーが行います。
+
 ---
 
 ## Phase 1 GitHub Actions 準備（2026-05-05 追加）
