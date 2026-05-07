@@ -122,6 +122,12 @@ CODE 担当 (7 files):
 
 3. **Codex 担当 6 ファイルの更新・管理**
 
+4. **Code / Cowork / Chat の補完・代替・保管**
+   - Code の Token 不足・並行業務時に、GitHub 差分確認、PR / Actions 確認、軽微な docs 修正、検証結果整理を補完
+   - Cowork の作業が詰まる場合に、Notion / Drive / Sheets 連携状況の確認、進捗報告文、未登録・遅延タスク整理を補完
+   - Chat に渡す前の論点整理、リスク整理、スレッド命名案の下書きを補助
+   - 代替実行時は、実施内容・結果・未決事項・主担当への戻し先を必ず残す
+
 **参照ドキュメント:**
 - [`CLAUDE.md`](../.claude/projects/jc-ai-senmu-2026/CLAUDE.md) ← **Code と共通**
 - [`CODEX_WORKFLOW.md.txt`](CODEX_WORKFLOW.md.txt)
@@ -130,6 +136,7 @@ CODE 担当 (7 files):
 
 **特に重要:**
 - **PMO 視点**: 毎セッション、Code・Cowork の進捗・連携状況を整理・報告
+- **補完視点**: Token 不足・並行業務・一時離脱で主担当が止まる場合は、Codex が一時的にサブ担当として代替確認・保管・引き継ぎを行う
 - Code が GitHub → Drive 同期を実行する際、Codex も同時にスクリプト実行可能
 - Codex 担当ファイルを更新したら `python github_to_drive_sync_batch.py --tool Codex` で自動同期
 - **リスク検出時は即座に Code・Cowork に通知**（ボトルネック・遅延など）
@@ -272,6 +279,24 @@ CODEX 担当 (6 files):
 
 ---
 
+## 🔁 補完・代替実行時の引き継ぎルール
+
+Code / Cowork / Chat へ人を介して依頼・引き継ぎする場合は、以下の出力構造を使います。
+
+```markdown
+【依頼先】Code / Cowork / Chat
+【目的】何を完了・確認してほしいか
+【背景】Codex が確認した事実・差分・リスク
+【対象】ファイル名、PR、Drive URL、Notion項目など
+【依頼内容】番号付きで具体化
+【Codex実施済み】実行済み作業・検証結果
+【未決事項】判断待ち・確認待ち
+```
+
+補完・代替実行は、主担当の権限を奪うものではありません。Codex はプロジェクトを止めないための一時的なサブ担当として動き、完了後は主担当へ戻します。
+
+---
+
 ## 📌 次ステップ（Phase 5+）
 
 - [ ] GitHub Actions による自動同期の検討（現在はスクリプト手動実行）
@@ -303,6 +328,7 @@ CODEX 担当 (6 files):
 **Codex さん:**
 - このドキュメント中の「Codex」セクションを参照
 - Code のサポート・分析・Codex ファイル管理
+- Code / Cowork / Chat の補完・代替・保管が必要な場合は、サブ担当として検証・整理・引き継ぎを実行
 - `github_to_drive_sync_batch.py --tool Codex` で自動同期
 
 **Claude Chat:**
