@@ -35,6 +35,7 @@ Codex さん、お疲れ様です！🎯
 - [`GITHUB_DRIVE_SYNC_WORKFLOW.md`](../docs/GITHUB_DRIVE_SYNC_WORKFLOW.md) - 同期ワークフロー
 - **Engagement System** (Issue #21): [`pmo_engagement_template.md`](pmo_engagement_template.md), [`kondo_core_roles.md`](kondo_core_roles.md), [`llm_engagement_systemprompt.md`](llm_engagement_systemprompt.md) - 近藤さんのモチベーション・活力向上システム
 - **PMO Communication** (Issue #21+):
+  - [`codex_pmo_trigger_keywords.md`](codex_pmo_trigger_keywords.md) - 超短縮トリガーキーワード & 文脈読み取りプロンプト（**最初にこれ**）
   - [`pmo_lowops_notification_template.md`](pmo_lowops_notification_template.md) - Code→Codex PMO 超低運用連絡テンプレート（送り手）
   - [`codex_pmo_intake_prompt.md`](codex_pmo_intake_prompt.md) - Codex が受け取って処理するプロンプト（受け手）
 
