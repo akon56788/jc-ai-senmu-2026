@@ -132,6 +132,32 @@ def update_manifest():
     # Build Docs API client
     service = build('docs', 'v1', credentials=credentials)
 
+    # Check if section already exists (idempotency check)
+    try:
+        doc = service.documents().get(documentId=MANIFEST_DOC_ID).execute()
+        doc_content = doc.get('body', {}).get('content', [])
+
+        # Check if "Issue #21: Engagement System Files" already exists
+        section_exists = False
+        for element in doc_content:
+            if 'paragraph' in element:
+                text = ''.join([
+                    run.get('text', '')
+                    for run in element['paragraph'].get('elements', [])
+                    if 'textRun' in run
+                ])
+                if 'Issue #21' in text and 'Engagement System Files' in text:
+                    section_exists = True
+                    break
+
+        if section_exists:
+            print(f"\n⏭️  Section 'Issue #21: Engagement System Files' already exists")
+            print(f"   Skipping insertion (idempotency check)")
+            return {'status': 'skipped', 'reason': 'section_already_exists'}
+    except Exception as e:
+        print(f"⚠️  Warning: Could not verify existing content: {e}")
+        print(f"   Proceeding with insertion attempt...")
+
     # Prepare the request
     requests = [
         {

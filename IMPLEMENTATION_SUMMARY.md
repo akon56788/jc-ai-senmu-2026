@@ -49,7 +49,7 @@ Updated three key context files to add engagement system references:
 - Handles token refresh and caching via `~/.claude/google_oauth_token.json`
 
 **Executed successfully**:
-- ✅ MANIFEST document updated (ID: 1I1RDFgfo90ZqYIhPnTZukrl3D70gjFy2WOWC2MHpdb4)
+- ✅ MANIFEST document updated (ID: 1guHY4inY_lXrpxVkHepT9Fi0-7xjoObF4SQsNw3w1tA)
 - ✅ Issue #21 Engagement System Files section added
 - ✅ Includes narrative file ID, GitHub mirror references, and architecture diagram
 - ✅ Commit: 10f7ef7 (feat: enable OAuth 2.0 for automated MANIFEST updates)
