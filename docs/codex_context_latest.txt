@@ -1,16 +1,54 @@
-【Codex 専用】最新コンテキストガイド
+【Codex 専用】最新コンテキスト入口
 ====================================
 
-**Last Updated:** 2026-05-05
-**Scope:** Codex 作業用の優先度・読み取り順・役割定義
+**Last Updated:** 2026-05-08
+**Scope:** Codex 作業用の入口・読み取り順・最新役割定義
+**Status:** Active
 
 ---
 
-## Codex の役割
+## このファイルの位置づけ
 
-1. **高度なテンプレート改修** — 既存テンプレートのカスタマイズ、条件分岐追加
-2. **LOM 発送業務の自動化** — Excel VBA / Apps Script 等による定型業務の効率化
-3. **プロセス最適化** — 回し方の改善提案、ワークフロー設計
+このファイルは、Codex が「専務理事対応（AI活用）」プロジェクトで作業を始めるときの最初の入口です。
+
+Drive を SSOT / 正本、GitHub を Mirror / 版管理レイヤー、Notion をタスク・プロジェクト進捗管理レイヤーとして扱います。Codex 作業では、`.md` と `.txt` のスナップショットが併存する場合、原則として `.txt` を優先して読み、差分がある場合はユーザー確認対象として扱います。
+
+---
+
+## 最新アーキテクチャ前提
+
+| レイヤー / ツール | 役割 |
+|---|---|
+| Google Drive | SSOT / 正本 / 最終的な真実のソース |
+| GitHub Mirror | Drive SSOT の複製・版管理・差分確認・スクリプト管理 |
+| Notion | タスク・プロジェクト進捗管理 / 運用状況の可視化 |
+| Claude Code | GitHub リポジトリ実装、同期スクリプト、ドキュメント生成、CODE担当ファイル更新 |
+| Codex | Code支援、レビュー、Agent PMO、SSOT健全性監視、外部レビュー結果のトリアージ |
+| Claude Cowork | Notion進捗管理、Drive/GitHub SSOT整備支援、日常運用・更新支援 |
+| Claude Chat | Read-only の質問、要約、構想支援 |
+| ChatGPT | 手動・対話型の外部顧問レビュー |
+| Gemini CLI | Codex から半自動で呼び出す外部レビュー実行役 |
+
+最新SSOTでこの前提が更新されている場合は、最新コンテクストを優先します。
+
+---
+
+## Codex の基本役割
+
+Codex は、単なるサブ実装担当ではなく、Code 支援・レビュー・Agent PMO・SSOT健全性監視・外部レビュー結果のトリアージを担います。
+
+主に以下を担当します。
+
+- GitHub Mirror 上の差分確認、レビュー、軽微なドキュメント修正
+- Code / Cowork / Chat の進捗・連携状況の確認
+- Drive SSOT と GitHub Mirror の差分・同期状態の確認
+- Notion 進捗管理レイヤーとの整合確認
+- Token 不足・並行業務・一時離脱時の補完作業と引き継ぎ整理
+- ChatGPT / Gemini CLI 外部レビュー依頼文の作成
+- 外部レビュー結果の `Blocker` / `Risk` / `Suggestion` / `No issue` 分類
+- ユーザー確認後の GitHub PR / Drive SSOT 反映案への整理
+
+Codex は、主担当ツールの判断権限を恒常的に置き換えるものではありません。補完実行時は、実施内容・結果・未決事項・戻し先を必ず残します。
 
 ---
 
@@ -18,74 +56,108 @@
 
 ### 優先度 1（毎回読む）
 ```
-1. SHARED_SOURCE.txt
-2. CLAUDE_enhanced.md
-3. AGENTS.md.txt
+1. codex_context_latest.txt
+2. MANIFEST
+3. TOOL_CONTEXT_GUIDE
+4. CONTEXT_FOR_CODEX
+5. SHARED_SOURCE.txt
 ```
 
 ### 優先度 2（作業内容に応じて）
 ```
-4. CODEX_WORKFLOW.md.txt
-5. CODEX_PROJECT_SETUP.txt
+6. AGENTS.md.txt
+7. CODEX_WORKFLOW.md.txt
+8. CODEX_PROJECT_SETUP.txt
+9. EXTERNAL_REVIEW_WORKFLOW.md
+10. GEMINI.md
 ```
 
 ### 優先度 3（参考）
 ```
-6. VISION.md
+11. CLAUDE_enhanced.md
+12. VISION.md
+13. CONTEXT_FOR_CHATGPT
+14. DRIVE_SYNC_STATUS.md
+15. GITHUB_DRIVE_SYNC_WORKFLOW.md
 ```
 
-### ❌ 読まないファイル
+### 読み取り時の注意
 ```
-old/ フォルダ内のすべての .gdoc ファイル
+- Drive を SSOT として扱う
+- GitHub は Mirror / 版管理レイヤーとして扱う
+- Notion は進捗管理レイヤーであり、SSOTそのものとして扱わない
+- .md と .txt が併存する場合、Codex作業では .txt を優先する
+- 併存ファイルに差分がある場合は、推測で統合せずユーザー確認対象にする
+- old/ フォルダ内の .gdoc は通常読まない
 ```
 
 ---
 
 ## Codex の責務・権限
 
-### ✅ Codex が担当する領域
+### Codex が担当する領域
 
 | 作業内容 | 判断 |
-|---------|------|
-| LOM 発送テンプレート（Excel）の改修 | **Codex 単独可** |
-| Word テンプレートのフィールドコード調整 | **Codex 単独可** |
-| Markdown テンプレートの仕様追加 | **Code / Codex 協議** |
-| プロセス設計・最適化提案 | **Chat / Codex 協議** |
+|---|---|
+| GitHub Mirror の差分確認・レビュー | Codex 主担当可 |
+| 軽微な docs 修正・検証結果整理 | Codex 主担当可 |
+| Drive SSOT / GitHub Mirror の健全性確認 | Codex PMO として担当 |
+| ChatGPT / Gemini CLI 外部レビュー依頼文作成 | Codex PMO として担当 |
+| 外部レビュー結果の分類・要約・トリアージ | Codex PMO として担当 |
+| Code / Cowork / Chat の補完作業 | 一時的な補完として可 |
+| Codex担当ファイルの更新 | ユーザー確認または合意済みスコープ内で可 |
 
-### ❌ Codex が担当しない領域
+### Codex が単独で確定しない領域
 
 | 作業内容 | 理由 |
-|---------|------|
-| SHARED_SOURCE.txt の方針変更 | Chat が主導 |
-| CLAUDE_enhanced.md の大規模改修 | Chat / Code の責務 |
-| 新規 AI ツール導入判断 | Chat（方針層）の決定 |
+|---|---|
+| Drive SSOT の最終反映判断 | Drive が正本であり、ユーザー確認が必要 |
+| GitHub Mirror PR の最終判断 | PRレビュー・ユーザー確認が必要 |
+| Notion DB の直接更新 | Notion は Cowork 主担当の進捗管理レイヤー |
+| ツール責務・運用方針の大幅変更 | Code / Cowork / Chat / ユーザー確認が必要 |
+| ChatGPT / Gemini CLI レビュー結果の自動採用 | 外部レビューは助言であり、Codexが分類後にユーザー確認する |
 
 ---
 
-## Codex での作業フロー
+## 作業開始時フロー
 
-### 開始時（毎回）
+### 通常作業
 ```
-1. SHARED_SOURCE.txt を読む
-2. CLAUDE_enhanced.md で全体方針確認
-3. AGENTS.md.txt で Codex 役割・LOM ルール確認
-4. 作業開始
+1. codex_context_latest.txt を読む
+2. TOOL_CONTEXT_GUIDE と CONTEXT_FOR_CODEX で最新役割を確認
+3. MANIFEST と SHARED_SOURCE.txt で Drive SSOT / GitHub Mirror 前提を確認
+4. 作業対象ファイルを確認
+5. .txt / .md 併存差分があればユーザー確認対象にする
+6. 実施内容・検証結果・未決事項を残す
 ```
 
-### LOM 発送作業時
+### GitHub / Drive / Notion / SSOT 更新が絡む作業
 ```
-1. 上記「開始時」を実行
-2. AGENTS.md.txt の「LOM 発送仕様」セクション読む
-3. CODEX_WORKFLOW.md.txt で検証基準確認
-4. Excel テンプレート修正・検証
-5. ユーザーに成果物を報告
+1. 通常作業フローを実行
+2. EXTERNAL_REVIEW_WORKFLOW.md と GEMINI.md を確認
+3. 必要に応じて Gemini CLI または ChatGPT に外部レビュー依頼
+4. レビュー結果を Blocker / Risk / Suggestion / No issue に分類
+5. ユーザー確認後に GitHub Mirror PR または Drive SSOT 反映案へ進める
+6. Notion を更新する必要がある場合は Cowork への依頼文案を作る
 ```
 
 ---
 
-## 📋 更新履歴
+## 外部レビュー連携
+
+ChatGPT と Gemini CLI はどちらも外部レビュー層ですが、役割を分けます。
+
+- ChatGPT: 手動・対話型の外部顧問レビュー
+- Gemini CLI: Codex が半自動で呼び出すレビュー実行役
+
+Codex は、重要変更時にレビュー依頼文を作成し、レビュー結果を PMO 観点で分類・要約します。レビュー結果は助言扱いであり、最終判断・反映・SSOT更新はユーザー確認後に行います。
+
+---
+
+## 更新履歴
 
 | バージョン | 日付 | 変更内容 | 担当 |
-|-----------|------|----------|------|
+|---|---|---|---|
+| v1.2 | 2026-05-08 | 最新アーキテクチャに合わせ、Codex入口・読み取り順・Agent PMO責務・外部レビュー連携を整合 | Codex |
 | v1.1 | 2026-05-06 | Cowork ローカル同期。要点整理版として再構成 | Cowork |
 | v1.0 | 2026-05-05 | 初版作成（Drive .txt形式で配置） | Code |
