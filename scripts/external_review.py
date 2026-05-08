@@ -15,6 +15,20 @@ ROOT = Path(__file__).resolve().parents[1]
 REVIEWS_DIR = ROOT / "reviews"
 
 
+def markdown_fence(text: str, language: str = "") -> str:
+    longest = 0
+    current = 0
+    for char in text:
+        if char == "`":
+            current += 1
+            longest = max(longest, current)
+        else:
+            current = 0
+    fence = "`" * max(3, longest + 1)
+    suffix = language if language else ""
+    return f"{fence}{suffix}\n{text}\n{fence}"
+
+
 def run_git(args: list[str]) -> str:
     result = subprocess.run(
         ["git", *args],
@@ -52,7 +66,7 @@ def build_prompt(args: argparse.Namespace) -> str:
     today = dt.date.today().isoformat()
     targets = "\n".join(f"- `{target}`" for target in args.target)
     target_contents = "\n\n".join(
-        f"## Target: {target}\n\n```text\n{read_target(target)}\n```"
+        f"## Target: {target}\n\n{markdown_fence(read_target(target), 'text')}"
         for target in args.target
     )
     diff_stat = run_git(["diff", "--stat", args.base, "--"])
@@ -110,15 +124,11 @@ Do not rewrite the full document. Give concise findings.
 
 ## Git Diff Stat
 
-```text
-{diff_stat or "(no diff against base)"}
-```
+{markdown_fence(diff_stat or "(no diff against base)", 'text')}
 
 ## Git Diff
 
-```diff
-{diff_text or "(no diff against base)"}
-```
+{markdown_fence(diff_text or "(no diff against base)", 'diff')}
 
 ## Current Target Content
 
@@ -140,10 +150,21 @@ def run_gemini(prompt: str, output_path: Path, gemini_command: str) -> None:
         )
 
     result = subprocess.run(
-        [executable],
+        [
+            executable,
+            "--prompt",
+            "",
+            "--approval-mode",
+            "plan",
+            "--skip-trust",
+            "--output-format",
+            "text",
+        ],
         cwd=ROOT,
         input=prompt,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,
