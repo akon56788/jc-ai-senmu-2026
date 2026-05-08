@@ -13,6 +13,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REVIEWS_DIR = ROOT / "reviews"
+# Keep this list aligned with the current core PMO / SSOT documents.
+DEFAULT_CONTEXT_FILES = [
+    "GEMINI.md",
+    "docs/TOOL_CONTEXT_GUIDE.md",
+    "docs/CONTEXT_FOR_CODEX.md",
+    "docs/AGENTS.md.txt",
+    "docs/EXTERNAL_REVIEW_WORKFLOW.md",
+]
 
 
 def markdown_fence(text: str, language: str = "") -> str:
@@ -45,33 +53,49 @@ def run_git(args: list[str]) -> str:
     return result.stdout.strip()
 
 
-def read_target(path: str) -> str:
+def read_repo_file(path: str, limit: int = 12000) -> str:
     target = (ROOT / path).resolve()
     try:
         target.relative_to(ROOT)
     except ValueError:
-        raise SystemExit(f"Target is outside repository: {path}")
+        raise SystemExit(f"File is outside repository: {path}")
 
     if not target.is_file():
-        raise SystemExit(f"Target file not found: {path}")
+        raise SystemExit(f"File not found: {path}")
 
     text = target.read_text(encoding="utf-8")
-    limit = 12000
     if len(text) > limit:
+        print(f"Warning: {path} was truncated from {len(text)} to {limit} characters.", file=sys.stderr)
         return text[:limit] + "\n\n...[truncated for review prompt]..."
     return text
+
+
+def build_file_sections(paths: list[str], heading: str, limit: int) -> str:
+    sections = []
+    for path in paths:
+        try:
+            content = read_repo_file(path, limit)
+        except SystemExit:
+            if heading == "Project Context":
+                continue
+            raise
+        sections.append(f"## {heading}: {path}\n\n{markdown_fence(content, 'text')}")
+    return "\n\n".join(sections)
 
 
 def build_prompt(args: argparse.Namespace) -> str:
     today = dt.date.today().isoformat()
     targets = "\n".join(f"- `{target}`" for target in args.target)
-    target_contents = "\n\n".join(
-        f"## Target: {target}\n\n{markdown_fence(read_target(target), 'text')}"
-        for target in args.target
-    )
+    context_files = [] if args.no_default_context else DEFAULT_CONTEXT_FILES.copy()
+    for path in args.context:
+        if path not in context_files:
+            context_files.append(path)
+    project_context = build_file_sections(context_files, "Project Context", 6000)
+    target_contents = build_file_sections(args.target, "Target", 12000)
     diff_stat = run_git(["diff", "--stat", args.base, "--"])
     diff_text = run_git(["diff", args.base, "--", *args.target])
     if len(diff_text) > 16000:
+        print(f"Warning: git diff was truncated from {len(diff_text)} to 16000 characters.", file=sys.stderr)
         diff_text = diff_text[:16000] + "\n\n...[diff truncated for review prompt]..."
 
     return f"""# External Review Request
@@ -92,6 +116,10 @@ def build_prompt(args: argparse.Namespace) -> str:
 ## Target Files
 
 {targets}
+
+## Project Context
+
+{project_context or "(no project context files included)"}
 
 ## Reviewer Stance
 
@@ -190,6 +218,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--reviewer", default="Gemini or ChatGPT", help="Reviewer label.")
     parser.add_argument("--base", default="HEAD", help="Git base for diff generation.")
+    parser.add_argument(
+        "--context",
+        action="append",
+        default=[],
+        help="Extra repository context file to include in the review prompt. Repeatable.",
+    )
+    parser.add_argument(
+        "--no-default-context",
+        action="store_true",
+        help="Do not include the default PMO / SSOT context files.",
+    )
     parser.add_argument("--run-gemini", action="store_true", help="Run Gemini CLI after generating request.")
     parser.add_argument("--gemini-command", default="gemini", help="Gemini CLI command name or path.")
     return parser.parse_args()
