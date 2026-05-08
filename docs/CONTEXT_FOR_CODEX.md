@@ -30,10 +30,11 @@ Codex さん、お疲れ様です！🎯
    - ツール間の読み取りルール・ファイル構成方針
 
 **参考（プロジェクト理解用）:**
-- [`MANIFEST`](https://docs.google.com/document/d/1I1RDFgfo90ZqYIhPnTZukrl3D70gjFy2WOWC2MHpdb4) ← Drive SSOT ファイル一覧
+- [`MANIFEST`](https://docs.google.com/document/d/1guHY4inY_lXrpxVkHepT9Fi0-7xjoObF4SQsNw3w1tA) ← Drive SSOT ファイル一覧
 - [`AGENTS.md.txt`](../docs/AGENTS.md.txt) - AI運用ルール
 - [`GITHUB_DRIVE_SYNC_WORKFLOW.md`](../docs/GITHUB_DRIVE_SYNC_WORKFLOW.md) - 同期ワークフロー
 - **Engagement System** (Issue #21): [`pmo_engagement_template.md`](pmo_engagement_template.md), [`kondo_core_roles.md`](kondo_core_roles.md), [`llm_engagement_systemprompt.md`](llm_engagement_systemprompt.md) - 近藤さんのモチベーション・活力向上システム
+- **PMO Communication** (Issue #21+): [`pmo_lowops_notification_template.md`](pmo_lowops_notification_template.md) - Code→Codex PMO 超低運用連絡テンプレート
 
 ---
 
