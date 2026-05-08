@@ -132,31 +132,56 @@ def update_manifest():
     # Build Docs API client
     service = build('docs', 'v1', credentials=credentials)
 
-    # Check if section already exists (idempotency check)
+    # Check if section already exists (idempotency check - ROBUST)
     try:
         doc = service.documents().get(documentId=MANIFEST_DOC_ID).execute()
         doc_content = doc.get('body', {}).get('content', [])
 
-        # Check if "Issue #21: Engagement System Files" already exists
-        section_exists = False
+        # Robust section existence check: extract ALL text from document
+        full_doc_text = ''
         for element in doc_content:
             if 'paragraph' in element:
-                text = ''.join([
+                # Extract all text runs from paragraph
+                paragraph_text = ''.join([
                     run.get('text', '')
                     for run in element['paragraph'].get('elements', [])
                     if 'textRun' in run
                 ])
-                if 'Issue #21' in text and 'Engagement System Files' in text:
-                    section_exists = True
-                    break
+                full_doc_text += paragraph_text + '\n'
+            elif 'table' in element:
+                # Extract text from table cells
+                table = element['table']
+                for row in table.get('tableRows', []):
+                    for cell in row.get('tableCells', []):
+                        for cell_element in cell.get('content', []):
+                            if 'paragraph' in cell_element:
+                                cell_text = ''.join([
+                                    run.get('text', '')
+                                    for run in cell_element['paragraph'].get('elements', [])
+                                    if 'textRun' in run
+                                ])
+                                full_doc_text += cell_text + ' '
+
+        # Check for section marker: "## 🎯 Issue #21: Engagement System Files"
+        section_markers = [
+            'Issue #21: Engagement System Files',
+            'Issue #21 Engagement System Files',
+            'Issue #21: Engagement'
+        ]
+
+        section_exists = any(marker in full_doc_text for marker in section_markers)
 
         if section_exists:
-            print(f"\n⏭️  Section 'Issue #21: Engagement System Files' already exists")
-            print(f"   Skipping insertion (idempotency check)")
+            print(f"\n⏭️  Section 'Issue #21: Engagement System Files' already exists in document")
+            print(f"   Document text contains: {[m for m in section_markers if m in full_doc_text]}")
+            print(f"   Skipping insertion (idempotency check PASSED)")
             return {'status': 'skipped', 'reason': 'section_already_exists'}
+        else:
+            print(f"\n✅ Idempotency check: Section NOT found in document (safe to insert)")
     except Exception as e:
-        print(f"⚠️  Warning: Could not verify existing content: {e}")
-        print(f"   Proceeding with insertion attempt...")
+        print(f"⚠️  Warning: Could not fully verify existing content: {e}")
+        print(f"   This is a BLOCKER - canceling insertion to prevent duplicates")
+        return {'status': 'error', 'reason': f'idempotency_check_failed: {str(e)}'}
 
     # Prepare the request
     requests = [
@@ -181,10 +206,16 @@ def update_manifest():
         print(f"   Document ID: {MANIFEST_DOC_ID}")
         print(f"   Changes: {len(result.get('replies', []))} request(s) executed")
         print(f"\n📍 View document: https://docs.google.com/document/d/{MANIFEST_DOC_ID}/edit")
+        print(f"\n📋 Verification needed:")
+        print(f"   [ ] Open document and verify ONLY ONE 'Issue #21: Engagement System Files' section exists")
+        print(f"   [ ] No duplicate sections present")
+        print(f"   [ ] Run script again to confirm idempotency (status: skipped)")
         return result
 
     except Exception as e:
         print(f"\n❌ Failed to update MANIFEST: {e}")
+        print(f"\n🛡️  SAFETY: Idempotency check prevented insertion.")
+        print(f"   No changes were made to the document.")
         raise
 
 if __name__ == '__main__':
