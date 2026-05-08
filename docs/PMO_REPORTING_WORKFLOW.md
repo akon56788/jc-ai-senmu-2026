@@ -76,9 +76,9 @@ As of 2026-05-08, the PMO workflow is integrated with the engagement system (`do
 
 4. **First operational phase:** Use this template as a candidate format for monthly/weekly task descriptions; lighten if operational load is too heavy
 
-**Related files (GitHub SSoT + Drive Mirror):**
-- GitHub SSoT: `docs/pmo_engagement_template.md`, `docs/kondo_core_roles.md`, `docs/llm_engagement_systemprompt.md`
-- Drive Mirror: See `DRIVE_SYNC_STATUS.md` for mirror file IDs
+**Related files (Drive SSoT + GitHub Mirror):**
+- Drive SSoT: See `DRIVE_SYNC_STATUS.md` for SSoT file locations
+- GitHub Mirror: `docs/pmo_engagement_template.md`, `docs/kondo_core_roles.md`, `docs/llm_engagement_systemprompt.md` (version control & diff tracking)
 - Memory: `memory/narrative_engagement_system.md`
 
 ---

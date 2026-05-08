@@ -45,10 +45,15 @@ GitHub Docs/ (Mirror: 複製・版管理)
 - **更新フロー**: GitHub commit → Drive 同期スクリプト → Drive 反映
 
 **ファイル管理:**
-- 全 14 ファイル
+- 全 14 ファイル（SSOT management）
 - CODE 担当: 7 ファイル（AGENTS, SHARED_SOURCE, README, DRIVE_SYNC_* など）
 - CODEX 担当: 6 ファイル（notion_poc_design, CLAUDE_enhanced, VISION, CODEX_* など）
 - Cowork 進捗監視: 全ファイル（Read-only）
+
+**Engagement System Files** (Issue #21・Phase 5):
+- Drive SSoT: 近藤さんの narrative file（Google Drive で保存・全ツールアクセス用）
+- GitHub Mirror: `docs/pmo_engagement_template.md`, `docs/kondo_core_roles.md`, `docs/llm_engagement_systemprompt.md`
+- 用途: タスク説明時に「意味・効果」を示唆し、モチベーション・活力を引き出す
 
 ---
 
