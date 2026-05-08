@@ -69,6 +69,22 @@ python scripts/external_review.py --target docs/TOOL_CONTEXT_GUIDE.md --question
 
 When `--run-gemini` is used, the script runs Gemini CLI in headless review mode with `--prompt ""`, `--approval-mode plan`, `--skip-trust`, and `--output-format text`. Gemini is used as a review-only advisor; Codex remains responsible for triage and any GitHub / Drive / Notion follow-up.
 
+By default, the review request includes compact project context from:
+
+- `GEMINI.md`
+- `docs/TOOL_CONTEXT_GUIDE.md`
+- `docs/CONTEXT_FOR_CODEX.md`
+- `docs/AGENTS.md.txt`
+- `docs/EXTERNAL_REVIEW_WORKFLOW.md`
+
+Add more context when needed:
+
+```powershell
+python scripts/external_review.py --target docs/AGENTS.md.txt --context docs/DRIVE_SYNC_STATUS.md --question "Check SSOT sync risk" --run-gemini
+```
+
+Use `--no-default-context` only for very small reviews where the PMO / SSOT background is unnecessary.
+
 The script writes:
 
 - `reviews/YYYY-MM-DD_external_review_request.md`
