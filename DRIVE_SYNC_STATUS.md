@@ -6,7 +6,7 @@
 ## Source Of Truth
 
 - Phase 0: Google Drive remains the SSOT for operational context files.
-- Phase 1: GitHub is SSoT for context files & engagement system files (version control & workflow).
+- Phase 1: **Google Drive is SSoT for context files & engagement system files; GitHub is Mirror for version control & diff tracking.**
 - Repository: https://github.com/akon56788/jc-ai-senmu-2026
 
 ## Current Scope

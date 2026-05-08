@@ -120,13 +120,14 @@ type: project
 - ✅ コミット: ebeaa7f「feat: add narrative file v1.16 as SSoT for engagement system」
 
 **SSoT 登録**: 
-- **GitHub（正本）**: `docs/narrative/kondo_narrative.md` (commit: ebeaa7f)
-- **Google Drive（ミラー）**: ID `1LsrD7u-Jd5Py1Qv2d3FkWe1oeUoFVwd-xhYaCM4y6TU`
+- **Google Drive（正本）**: ID `1LsrD7u-Jd5Py1Qv2d3FkWe1oeUoFVwd-xhYaCM4y6TU`
   - Folder: 専務理事対応（AI活用）/kondo_narrative_v1.16.md
-  - Purpose: 全ツール（Code・Codex・Cowork）アクセス
+  - Purpose: 全ツール（Code・Codex・Cowork）アクセス用SSoT
   - 配置日: 2026-05-08
+- **GitHub（ミラー）**: `docs/narrative/kondo_narrative.md` (commit: ebeaa7f)
+  - Purpose: 版管理・差分確認用
 - Memory: `memory/narrative_engagement_system.md`
-- Notion 連携: 次フェーズで検討（現在は GitHub を正本）
+- Notion 連携: 次フェーズで検討
 
 ### Part 2: エンゲージメント・システム構築完了
 #### 成果物
