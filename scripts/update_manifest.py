@@ -17,6 +17,7 @@ from googleapiclient.discovery import build
 import os
 import sys
 import json
+import argparse
 from pathlib import Path
 
 # Set UTF-8 output for Windows compatibility
@@ -117,10 +118,20 @@ def get_oauth_credentials():
 
     return creds
 
-def update_manifest():
-    """Update MANIFEST with engagement system section."""
+def update_manifest(check_only=False, dry_run=False):
+    """Update MANIFEST with engagement system section.
+
+    Args:
+        check_only: If True, only verify without writing
+        dry_run: If True, show what would happen without writing
+    """
     print(f"📄 Updating MANIFEST document (ID: {MANIFEST_DOC_ID})")
     print(f"   Section: Issue #21 Engagement System Files")
+
+    if check_only:
+        print(f"   Mode: ✓ CHECK-ONLY (no changes to Drive)")
+    if dry_run:
+        print(f"   Mode: 🔍 DRY-RUN (preview only)")
 
     # Get OAuth credentials
     try:
@@ -134,16 +145,38 @@ def update_manifest():
 
     # Check if section already exists (idempotency check - ROBUST)
     try:
-        doc = service.documents().get(documentId=MANIFEST_DOC_ID).execute()
-        doc_content = doc.get('body', {}).get('content', [])
+        # ✅ NEW: Include tabs content for complete document structure
+        doc = service.documents().get(
+            documentId=MANIFEST_DOC_ID,
+            includeTabsContent=True
+        ).execute()
 
-        # Robust section existence check: extract ALL text from document
+        # ✅ NEW: Collect content from both body and tabs
+        contents = []
+
+        # 1. Fallback: Traditional body.content (for non-tabbed documents)
+        contents.extend(doc.get('body', {}).get('content', []))
+
+        # 2. Main: Tabbed content (for modern tabbed documents)
+        tabs = doc.get('tabs', [])
+        detected_tab_id = None  # Store the first tab ID for insertion
+
+        for tab_idx, tab in enumerate(tabs):
+            if detected_tab_id is None:
+                detected_tab_id = tab.get('tabId')  # Capture first tab ID
+
+            document_tab = tab.get('documentTab', {})
+            body = document_tab.get('body', {})
+            contents.extend(body.get('content', []))
+
+        # ✅ FIX: Robust section existence check: extract ALL text from unified content
+        # NOTE: Google Docs API stores text in 'textRun.content', not 'textRun.text'
         full_doc_text = ''
-        for element in doc_content:
+        for element in contents:
             if 'paragraph' in element:
                 # Extract all text runs from paragraph
                 paragraph_text = ''.join([
-                    run.get('text', '')
+                    run['textRun'].get('content', '')  # ← FIX: use 'content' not 'text'
                     for run in element['paragraph'].get('elements', [])
                     if 'textRun' in run
                 ])
@@ -156,7 +189,7 @@ def update_manifest():
                         for cell_element in cell.get('content', []):
                             if 'paragraph' in cell_element:
                                 cell_text = ''.join([
-                                    run.get('text', '')
+                                    run['textRun'].get('content', '')  # ← FIX: use 'content' not 'text'
                                     for run in cell_element['paragraph'].get('elements', [])
                                     if 'textRun' in run
                                 ])
@@ -171,6 +204,16 @@ def update_manifest():
 
         section_exists = any(marker in full_doc_text for marker in section_markers)
 
+        # ✅ NEW: Debug information about detected structure
+        print(f"\n📊 Document structure detected:")
+        print(f"   - body.content elements: {len(doc.get('body', {}).get('content', []))}")
+        print(f"   - Tabs found: {len(tabs)}")
+        if tabs:
+            print(f"   - First tab ID: {detected_tab_id}")
+            for tab_idx, tab in enumerate(tabs):
+                tab_content_count = len(tab.get('documentTab', {}).get('body', {}).get('content', []))
+                print(f"   - Tab {tab_idx} content elements: {tab_content_count}")
+
         if section_exists:
             print(f"\n⏭️  Section 'Issue #21: Engagement System Files' already exists in document")
             print(f"   Document text contains: {[m for m in section_markers if m in full_doc_text]}")
@@ -183,14 +226,34 @@ def update_manifest():
         print(f"   This is a BLOCKER - canceling insertion to prevent duplicates")
         return {'status': 'error', 'reason': f'idempotency_check_failed: {str(e)}'}
 
-    # Prepare the request
+    # ✅ NEW: Check-only mode - verify without writing
+    if check_only:
+        print(f"\n✅ CHECK-ONLY mode: Section NOT found (safe to insert)")
+        print(f"   Use without --check-only to actually insert")
+        return {'status': 'check_only', 'reason': 'verified_safe_to_insert'}
+
+    # ✅ NEW: Dry-run mode - show what would happen
+    if dry_run:
+        print(f"\n🔍 DRY-RUN mode:")
+        print(f"   Would insert at index: 1")
+        if detected_tab_id:
+            print(f"   Would insert in tab: {detected_tab_id}")
+        print(f"   Text length: {len(ENGAGEMENT_SYSTEM_SECTION)} characters")
+        print(f"   Section length: ~20 lines")
+        print(f"   Side effect: Drive MANIFEST would be modified")
+        return {'status': 'dry_run', 'reason': 'would_insert_section'}
+
+    # Prepare the request with ✅ NEW: explicit tabId
+    location = {'index': 1}
+    if detected_tab_id:
+        location['tabId'] = detected_tab_id
+        print(f"\n📍 Will insert into tab: {detected_tab_id}")
+
     requests = [
         {
             'insertText': {
                 'text': ENGAGEMENT_SYSTEM_SECTION,
-                'location': {
-                    'index': 1  # Insert at the beginning
-                }
+                'location': location
             }
         }
     ]
@@ -219,8 +282,39 @@ def update_manifest():
         raise
 
 if __name__ == '__main__':
+    # ✅ NEW: Command-line argument parsing
+    parser = argparse.ArgumentParser(
+        description='Update MANIFEST document with Issue #21 Engagement System section',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='''
+Examples:
+  # Check if safe to insert (no Drive changes)
+  python scripts/update_manifest.py --check-only
+
+  # Preview what would happen (no Drive changes)
+  python scripts/update_manifest.py --dry-run
+
+  # Actually insert (requires idempotency check to pass)
+  python scripts/update_manifest.py
+        '''
+    )
+
+    parser.add_argument(
+        '--check-only',
+        action='store_true',
+        help='Verify without writing to Drive'
+    )
+
+    parser.add_argument(
+        '--dry-run',
+        action='store_true',
+        help='Show what would happen without writing'
+    )
+
+    args = parser.parse_args()
+
     try:
-        update_manifest()
+        update_manifest(check_only=args.check_only, dry_run=args.dry_run)
     except Exception as e:
         print(f"\n❌ Error: {e}")
         exit(1)
