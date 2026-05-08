@@ -119,6 +119,101 @@ _Review complete. See [Issue] for details._
 
 ---
 
+## 📥 Codex PMO 受信返信テンプレート
+
+Code / Cowork / Chat からの低運用連絡を受けた Codex PMO は、以下の3要素を分けて返信する。
+
+1. **受信結果**: トリガー・Issue・文脈を認識できたか
+2. **実行結果**: 実際に何を確認・実行し、何が分かったか
+3. **Close判定**: 対象Issueを閉じてよいか、追加対応が必要か
+
+### 標準版（検証・Close判断あり）
+
+```markdown
+## Codex PMO Intake Result
+
+**Received**: ✅ / ⚠️ / ❌
+**Pattern**: A / B / C / D / Unknown
+**Issue**: #XX
+**Context extraction**: ✅ / ⚠️ / ❌
+
+### 1. 受信結果
+
+- Trigger recognized: ✅ / ⚠️ / ❌
+- Extracted issue: #XX
+- Extracted status: [完了 / 進行中 / 確認待ち / リスク]
+- Extracted commits: [commit ids]
+- Extracted files: [files]
+
+### 2. 実行結果
+
+- Action taken: [Issueコメント / Drive確認 / スクリプト実行 / Git確認 / 保留]
+- Verification result: ✅ / ⚠️ / ❌
+- Findings:
+  - [確認できたこと]
+  - [残ったこと]
+  - [副作用があれば記載]
+
+### 3. Close判定
+
+**Close judgment**: ✅ Close可能 / ⚠️ 軽微修正後 / ❌ 追加修正必要
+
+**Reason**:
+- [理由1]
+- [理由2]
+
+**Next action**:
+- [Code / Codex / Cowork / User の次アクション]
+
+### 4. PoCメトリクス
+
+- Trigger recognition: ✅ / ⚠️ / ❌
+- Context extraction: ✅ / ⚠️ / ❌
+- Processing time: [分]
+- Human intervention: [なし / あり: 内容]
+- Side effect: [なし / あり: 内容]
+```
+
+### 超短縮版（受付・進捗報告向け）
+
+```markdown
+## Codex PMO Intake Result
+
+**Received**: ✅
+**Pattern**: A / B / C / D
+**Issue**: #XX
+**Context extraction**: ✅
+
+**Action taken**: [実施内容]
+**Result**: ✅ / ⚠️ / ❌
+
+**Close judgment**: ✅ Close可能 / ⚠️ 軽微修正後 / ❌ 追加修正必要
+**Next**: [次アクション]
+
+_PoC: trigger ✅ / extraction ✅ / side effect [なし/あり]_
+```
+
+### 使用例: Pattern A 受信後のPMO返信
+
+```markdown
+## Codex PMO Intake Result
+
+**Received**: ✅
+**Pattern**: A
+**Issue**: #21
+**Context extraction**: ✅
+
+**Action taken**: Issue #23 / #27 にPMO報告、Drive MANIFESTとスクリプト挙動を確認
+**Result**: ⚠️ 冪等性チェックが期待通り skip せず、MANIFEST重複が一時発生。重複はPMO側で復旧済み。
+
+**Close judgment**: ⚠️ 軽微修正後
+**Next**: `scripts/update_manifest.py` のskip判定修正後、再実行で `status: skipped` を確認
+
+_PoC: trigger ✅ / extraction ✅ / side effect あり・復旧済み_
+```
+
+---
+
 ## 🛠️ Code からの使用方法
 
 ### 短期運用（このセッション・連続セッション）
@@ -211,6 +306,9 @@ Codex PMO ロール定義への追加：
 - パターン別使用頻度 (A > B > C > D 想定)
 - PMO確認遅延時間（目標: 24時間以内）
 - 誤報 / 見落としの発生
+- PMO受信結果: Received / Context extraction / Action result / Close judgment
+- 検証副作用: なし / あり / 復旧済み / 未復旧
+- Close判定の精度: Close可能 / 軽微修正後 / 追加修正必要 の後続結果
 
 ---
 

@@ -107,7 +107,15 @@ Code がトリガーキーワードを送ったとき、Codex はこのプロン
    **What changed**: [3行以内]
    ...
 
-6️⃣ Code へ報告
+6️⃣ PMO受信返信を生成
+   docs/pmo_lowops_notification_template.md の
+   「Codex PMO 受信返信テンプレート」を使い、以下を分離：
+   - 受信結果
+   - 実行結果
+   - Close判定
+   - PoCメトリクス
+
+7️⃣ Code へ報告
    「✅ Issue #XX の PMO 連絡を投稿しました」
 ```
 
@@ -133,7 +141,9 @@ Codex (詳細処理)
   └─ GitHub Issue コメント に投稿
   ↓
 PMO
-  └─ 検証開始
+  ├─ 受信結果を記録
+  ├─ 実行結果を記録
+  └─ Close判定を返答
 ```
 
 ### フロー B: PMOにリスク報告
@@ -260,6 +270,13 @@ Codex:
 **エラー:**
 - Issue 自動特定失敗: X 回 / 理由: [具体]
 - GitHub API エラー: X 回 / 対応: [代替手段]
+
+**PMO受信結果:**
+- Received: ✅ / ⚠️ / ❌
+- Context extraction: ✅ / ⚠️ / ❌
+- Action result: ✅ / ⚠️ / ❌
+- Close judgment: Close可能 / 軽微修正後 / 追加修正必要
+- Side effect: なし / あり・復旧済み / あり・未復旧
 
 **改善提案:**
 - [ ] なし

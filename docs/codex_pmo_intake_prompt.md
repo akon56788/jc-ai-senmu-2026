@@ -68,6 +68,15 @@ _Low-ops verification request. See Issue #XX for full details._
 1. GitHub Issue #XX のコメント / Chat スレッド に投稿
 2. Code へ 「PMO 連絡完了」と簡潔に報告
    例：「✅ Issue #XX 検証依頼を PMO に投稿しました」
+
+【PMO受信返信】
+Codex PMOとして受信・検証した結果は、必ず以下を分けて返す：
+- 受信結果: トリガー・Issue・文脈を認識できたか
+- 実行結果: 何を確認・実行し、何が分かったか
+- Close判定: 対象Issueを閉じてよいか、追加対応が必要か
+
+返信テンプレートは `docs/pmo_lowops_notification_template.md` の
+「Codex PMO 受信返信テンプレート」を使用する。
 ```
 
 ---
@@ -86,7 +95,9 @@ Codex（このプロンプト実行）
   └─ GitHub Issue / Chat に投稿
   ↓
 PMO（連絡を受け取り）
-  └─ 検証作業を開始
+  ├─ 受信結果を分離して記録
+  ├─ 実行結果を分離して記録
+  └─ Close判定を分離して返答
 ```
 
 ---
@@ -148,7 +159,11 @@ Codex 処理:
 1. Issue #21 から最新コメント / Commit メッセージ取得
 2. What changed を修正内容から抽出（3行以内）
 3. Issue #21 のコメント欄に「## 🔔 Codex PMO: Issue #21 Verification Ready」投稿
-4. Code へ報告: 「✅ Issue #21 検証依頼を投稿しました」
+4. PMO受信返信テンプレートで以下を分けて記録
+   - 受信結果
+   - 実行結果
+   - Close判定
+5. Code へ報告: 「✅ Issue #21 検証依頼を投稿しました」
 ```
 
 ### パターン B: リスク検出 → 対応依頼
@@ -209,6 +224,13 @@ Codex が以下に遭遇した場合の対応：
 
 **エラー発生**:
 - 0 件 / 1 件 / etc.
+
+**PMO受信判定**:
+- Received: ✅ X 件 / ⚠️ X 件 / ❌ X 件
+- Context extraction: ✅ X 件 / ⚠️ X 件 / ❌ X 件
+- Action result: ✅ X 件 / ⚠️ X 件 / ❌ X 件
+- Close judgment: Close可能 X 件 / 軽微修正後 X 件 / 追加修正必要 X 件
+- Side effect: なし X 件 / あり・復旧済み X 件 / あり・未復旧 X 件
 
 **改善提案**:
 - [ ] なし
