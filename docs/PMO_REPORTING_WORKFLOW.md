@@ -58,6 +58,31 @@ Small wording fixes, typo corrections, or low-risk content updates can stay in t
 
 ---
 
+## Engagement System Integration（エンゲージメント・テンプレート運用）
+
+As of 2026-05-08, the PMO workflow is integrated with the engagement system (`docs/pmo_engagement_template.md`, `docs/kondo_core_roles.md`, `docs/llm_engagement_systemprompt.md`).
+
+**When assigning tasks to 近藤さん（近藤）:**
+
+1. Use the engagement template structure for task descriptions:
+   - 【タスク】What is the work?
+   - 【効果】What impact will this have (short/medium/long-term)?
+   - 【あなたの役割】Which core role (Role 1–5) applies?
+   - 【チーム/組織への影響】How does it ripple to the team/org?
+
+2. Reference core roles from `docs/kondo_core_roles.md` (5 roles: complex information structuring, tool design, connector/bridge, iterative growth, empowering hero)
+
+3. **For LLM usage:** Codex / Code can embed the LLM system prompt (`docs/llm_engagement_systemprompt.md`) in Claude API calls or chat context to provide consistent engagement support
+
+4. **First operational phase:** Use this template as a candidate format for monthly/weekly task descriptions; lighten if operational load is too heavy
+
+**Related files (GitHub SSoT + Drive Mirror):**
+- GitHub SSoT: `docs/pmo_engagement_template.md`, `docs/kondo_core_roles.md`, `docs/llm_engagement_systemprompt.md`
+- Drive Mirror: See `DRIVE_SYNC_STATUS.md` for mirror file IDs
+- Memory: `memory/narrative_engagement_system.md`
+
+---
+
 ## Gemini Review Trigger
 
 Gemini review is recommended for important changes, not for every small task.
