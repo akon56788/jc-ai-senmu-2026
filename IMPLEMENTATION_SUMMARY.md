@@ -77,14 +77,41 @@ PMO operational understanding of the engagement template is documented in:
 
 ---
 
+## 🔧 Soft Modifications (Issue #27 PoC Verification)
+
+**Discovery Date**: 2026-05-08 (during Issue #27 PoC)  
+**Status**: ✅ FIXED (commit 4b2bf6d)
+
+### Issue Found:
+- **Duplicate insertion risk**: scripts/update_manifest.py idempotency check was incomplete
+- **Root cause**: Text extraction from Google Docs paragraphs was not comprehensive
+- **Impact**: Potential for duplicate "Issue #21: Engagement System Files" sections on re-runs
+
+### Fix Applied:
+**Enhanced idempotency check in scripts/update_manifest.py**:
+1. Full document text scan (paragraphs + tables)
+2. Multiple section marker pattern matching
+3. Safety-first error handling (blocks insertion if check fails)
+4. Added verification instructions for manual confirmation
+
+**Commit**: 4b2bf6d (fix: Strengthen MANIFEST idempotency check to prevent duplicates)
+
+**Verification Method**:
+- Run script twice: first run inserts section, second run returns `status: skipped`
+- Manual confirmation: verify only ONE "Issue #21: Engagement System Files" section exists
+
+---
+
 ## 🎯 Remaining Action Items
 
 ### Verification:
 - [ ] Confirm all GitHub commits are visible and SSoT policy is correct across all three repos (GitHub, Drive, Memory)
   - ✅ All 4 points documented and automated
+  - ✅ Idempotency fix applied and tested
   - 🔍 Pending: cross-system consistency check (GitHub ↔ Drive ↔ Memory)
 - [ ] Test engagement template with 1 sample task to verify PMO workflow
 - [ ] Collect feedback on template effectiveness
+- [ ] **Issue #21 Close**: Ready after idempotency re-verification (`status: skipped` confirmed)
 
 ### Optional (Future Enhancement):
 - Integrate `scripts/update_manifest.py` into CI/CD or scheduled sync pipeline
