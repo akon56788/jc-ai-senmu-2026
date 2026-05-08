@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "unpushed=$(git log origin/main..HEAD --oneline 2>/dev/null | wc -l); if [ \"$unpushed\" -gt 0 ]; then echo '{\"systemMessage\": \"⚠️ WARNING: '$unpushed' unpushed commits detected. Remember to push before ending the session.\"}'; fi",
+            "timeout": 10,
+            "statusMessage": "Checking for unpushed commits..."
+          }
+        ]
+      }
+    ]
+  }
+}
