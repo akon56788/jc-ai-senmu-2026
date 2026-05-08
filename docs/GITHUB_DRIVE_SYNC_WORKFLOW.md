@@ -72,6 +72,7 @@ CODE・CODEX・Cowork の 3 ツール間で GitHub リポジトリと Drive SSOT
 | CODEX_PROJECT_SETUP.txt | 1BLwDyhlhsNJe2HR1Vd1MlKlgj-AumHII | docs/ | Codex | ⭐⭐ |
 | codex_context_latest.txt | 1EzHoVlebl3bGCPDTQa8OMFXSxSuSQKSw | docs/ | Codex | ⭐⭐⭐ |
 | GITHUB_BRANCH_RULESET_CONFIG.md | 1_KtJ_1WLcYMB7NMZHJP6OHzks5_jBmSC | docs/ | Code | ⭐ |
+| kondo_career_narrative_ai_profile.md | Drive file: `専務理事対応（AI活用）/kondo_career_narrative_ai_profile.md` | docs/narrative/ | Codex | ⭐⭐ |
 
 ---
 

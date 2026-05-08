@@ -1,7 +1,7 @@
 # Drive ↔ GitHub 同期ステータス
 
-**バージョン**: v1.1
-**最終更新**: 2026-05-06
+**バージョン**: v1.2
+**最終更新**: 2026-05-09
 **作成者**: Mr. Coro (a.kondo@work-life-renovation.com)
 
 ---
@@ -26,6 +26,7 @@
 | SHARED_SOURCE.txt | `docs/SHARED_SOURCE.txt` | 2026-05-05 |
 | CLAUDE_enhanced.md | `docs/CLAUDE_enhanced.md` | 2026-05-05 |
 | AGENTS.md.txt | `docs/AGENTS.md` | 2026-05-05 |
+| kondo_career_narrative_ai_profile.md | `docs/narrative/kondo_career_narrative_ai_profile.md` | 2026-05-09 |
 
 ### 未同期（Drive のみ）
 
@@ -61,5 +62,6 @@
 
 | バージョン | 日付 | 変更内容 | 担当 |
 |-----------|------|----------|------|
+| v1.2 | 2026-05-09 | Issue #33/#34関連の職務経歴ナラティブ素材をDrive SSoTとGitHub Mirrorに追加 | Codex |
 | v1.1 | 2026-05-06 | Cowork ローカル同期。更新履歴テーブル追加。GitHub同期スコープ表を整理 | Cowork |
 | v1.0 | 2026-05-05 | 初版作成（Phase 0/1 定義・同期スコープ） | Code |

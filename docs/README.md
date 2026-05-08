@@ -1,6 +1,6 @@
 # 専務理事対応（AI活用）プロジェクト — SSoT README
 
-**バージョン**: v1.1
+**バージョン**: v1.2
 **最終更新**: 2026-05-06
 **作成者**: Mr. Coro (a.kondo@work-life-renovation.com)
 
@@ -29,6 +29,7 @@ Google Drive フォルダ「専務理事対応（AI活用）」を **SSOT（Sing
 | DRIVE_SYNC_CHECKLIST.md | Drive同期チェックリスト | 随時 |
 | THREAD_NAMING_GUIDE.txt | スレッド命名ガイド | 稀 |
 | notion_poc_design.md | Notion PoC設計 | 随時 |
+| kondo_career_narrative_ai_profile.md | 職務経歴をAI/PMO参照向けに再構成したナラティブ素材（Issue #33/#34関連） | 必要時 |
 
 ### Codexコンテキスト
 
@@ -93,5 +94,6 @@ Google Drive フォルダ「専務理事対応（AI活用）」を **SSOT（Sing
 
 | バージョン | 日付 | 変更内容 | 担当 |
 |-----------|------|----------|------|
+| v1.2 | 2026-05-09 | Issue #33/#34関連ナラティブ素材 `kondo_career_narrative_ai_profile.md` をSSoT構成に追加 | Codex |
 | v1.1 | 2026-05-06 | Cowork ローカル同期。更新履歴テーブル追加。要点整理版として再構成 | Cowork |
 | v1.0 | 2026-05-04 | 初版作成 | Code |
