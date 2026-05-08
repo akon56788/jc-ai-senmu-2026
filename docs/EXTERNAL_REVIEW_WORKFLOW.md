@@ -9,12 +9,19 @@
 
 Codex PMO can request an external, objective review from ChatGPT or Gemini when a change affects project policy, SSOT operations, GitHub / Drive / Notion coordination, or cross-tool role definitions.
 
-The first implementation is **semi-automatic**:
+External review has two routes:
+
+- **ChatGPT**: manual, interactive external advisory review. Codex or the user supplies the required SSOT summary, diffs, and decision points.
+- **Gemini CLI**: semi-automatic command-driven review executed by Codex.
+
+The first implementation is **semi-automatic** through Gemini CLI, with ChatGPT used when interactive review or wording support is needed:
 
 1. Codex collects the change target, context, and review questions.
-2. Codex generates a Markdown review request under `reviews/`.
+2. Codex generates a Markdown review request under `reviews/` or prepares a manual ChatGPT request.
 3. If Gemini CLI is installed, Codex can send the request to Gemini and save the response.
-4. Codex summarizes the result in the PMO report and decides whether follow-up changes are needed.
+4. If interactive review is needed, Codex or the user can provide the same context package to ChatGPT.
+5. Codex summarizes the result in the PMO report and decides whether follow-up changes are needed.
+6. GitHub Mirror PRs or Drive SSOT reflection proceed only after user confirmation.
 
 ---
 
@@ -24,12 +31,12 @@ The first implementation is **semi-automatic**:
 |------|----------------|--------------------|
 | Codex | PMO owner, request generation, result triage, GitHub / Drive follow-up | Yes |
 | ChatGPT | Manual external review and second opinion | No |
-| Gemini | Semi-automatic external review through CLI | No |
+| Gemini CLI | Semi-automatic external review through CLI | No |
 | Code | Implementation owner for GitHub-heavy changes | Yes, within scope |
 | Cowork | Notion / Drive operations owner | Yes, within scope |
 | Claude Chat | Policy discussion and final wording support | Yes, with user approval |
 
-External reviewers are advisory. They do not directly update GitHub, Drive, Notion, or SSOT documents.
+External reviewers are advisory. They do not directly update GitHub, Drive, Notion, or SSOT documents. ChatGPT is the manual, interactive review layer; Gemini CLI is the semi-automatic review execution layer.
 
 ---
 
@@ -128,6 +135,14 @@ Codex should report external review status in detailed PMO mode:
 ```
 
 Normal three-line PMO reports do not need this block unless an external review was requested.
+
+Before applying review results to GitHub Mirror PRs or Drive SSOT reflection, Codex should present a short user confirmation summary covering:
+
+- reviewer and overall result
+- findings that will be reflected
+- findings intentionally not reflected
+- target files
+- remaining questions
 
 ---
 
