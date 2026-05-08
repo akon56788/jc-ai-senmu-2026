@@ -1,7 +1,7 @@
 # External Review Workflow
 
 **Date**: 2026-05-08
-**Status**: Phase 5 draft
+**Status**: Phase 1 adjunct draft
 
 ---
 
@@ -60,6 +60,14 @@ Generate and run Gemini CLI:
 ```powershell
 python scripts/external_review.py --target docs/TOOL_CONTEXT_GUIDE.md --question "PMO role update risk check" --run-gemini
 ```
+
+On Windows, if `gemini` is installed but not on the current PowerShell `PATH`, pass the command path explicitly:
+
+```powershell
+python scripts/external_review.py --target docs/TOOL_CONTEXT_GUIDE.md --question "PMO role update risk check" --run-gemini --gemini-command "$env:APPDATA\npm\gemini.cmd"
+```
+
+When `--run-gemini` is used, the script runs Gemini CLI in headless review mode with `--prompt ""`, `--approval-mode plan`, `--skip-trust`, and `--output-format text`. Gemini is used as a review-only advisor; Codex remains responsible for triage and any GitHub / Drive / Notion follow-up.
 
 The script writes:
 

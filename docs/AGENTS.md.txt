@@ -8,7 +8,7 @@
 
 ## ツール分担表（概要）
 
-各 AI ツール（Claude Chat、Cowork、Claude Code、Codex、ChatGPT）がどの役割を担い、どのファイルを参照すべきかを定義します。
+各 AI ツール（Claude Chat、Cowork、Claude Code、Codex、ChatGPT、Gemini）がどの役割を担い、どのファイルを参照すべきかを定義します。
 
 ### ツール別 責務・入力・出力
 
@@ -18,7 +18,8 @@
 | **Cowork** | 運用・実行 | タスク自動実行、Sheets/Notion 登録、Drive 同期 | AGENTS.md.txt | Drive / Notion / Sheets | 中 |
 | **Claude Code** | 実装・テンプレート | Markdown / Office テンプレート生成、ファイル加工 | CLAUDE_enhanced.md.txt + AGENTS.md.txt | outputs/ + Drive | 中〜高 |
 | **Codex** | 最適化・改修 / Agent PMO / 補完実行 | VBA / Apps Script 改修、プロセス最適化、LOM 自動化、Code・Cowork の並行支援・代替実行 | AGENTS.md.txt + CODEX_WORKFLOW.md.txt | outputs/ + Drive / GitHub / Notion向け報告 | 高 |
-| **ChatGPT** | 文案・代替案 | 文案作成、翻訳、比較検討、プレゼン資料 | Chat の方針 | メール / Word | 低 |
+| **ChatGPT** | 文案・代替案 / 外部レビュー | 文案作成、翻訳、比較検討、プレゼン資料、客観レビュー | Chat / Codex の方針・レビュー依頼 | メール / Word / レビュー結果 | 低 |
+| **Gemini** | 半自動外部レビュー | Gemini CLI 経由の客観レビュー、リスク検出、改善提案 | Codex のレビュー依頼 | reviews/ のレビュー結果 | 中 |
 
 ---
 
@@ -537,6 +538,43 @@ Phase 2：Master/Project/Committee Database 構築 + テストデータ・リレ
 - ✅ **成果物ファイル形式の提案**（Word / メール 等）
 - ❌ 実装判断（Chat に相談）
 - ❌ スレッド命名（Chat 担当）
+
+---
+
+### Gemini（半自動外部レビュー層）
+
+**役割**：
+
+- Codex が生成した外部レビュー依頼の客観レビュー
+- GitHub / Drive / Notion / SSOT 連携リスクの検出
+- ツール間の役割定義・引き継ぎルールの曖昧さ指摘
+- 自動化・CLI・GitHub Actions 変更の安全性レビュー
+
+**入力元**：
+
+- `scripts/external_review.py` が生成する `reviews/YYYY-MM-DD_external_review_request.md`
+- Codex からの対象ファイル・PR・レビュー観点
+
+**出力先**：
+
+- `reviews/YYYY-MM-DD_external_review_gemini_result.md`
+- Codex の PMO レポート内「External Review」欄
+
+**参照順序**：
+
+```text
+1. Codex が対象ファイル・差分・質問を整理
+2. scripts/external_review.py --run-gemini で半自動レビュー実行
+3. Gemini は Blocker / Risk / Suggestion / No issue で結果を返す
+4. Codex が結果をトリアージし、必要な修正・PR・Drive SSOT 反映を行う
+```
+
+**権限**：
+
+- ✅ 客観レビュー・リスク指摘・改善提案
+- ✅ 半自動レビュー結果の生成
+- ❌ GitHub / Drive / Notion / SSOT の直接更新
+- ❌ 最終判断（Codex / Code / Chat / ユーザーが判断）
 
 ---
 
