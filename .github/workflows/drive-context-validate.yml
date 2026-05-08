@@ -7,7 +7,10 @@ on:
       - "docs/*.md"
       - "scripts/*.py"
       - "reviews/*.md"
+      - "GEMINI.md"
       - "DRIVE_SYNC_STATUS.md"
+      - ".github/PULL_REQUEST_TEMPLATE.md"
+      - ".github/ISSUE_TEMPLATE/*.md"
       - ".github/workflows/drive-context-validate.yml"
   push:
     branches:
@@ -17,7 +20,10 @@ on:
       - "docs/*.md"
       - "scripts/*.py"
       - "reviews/*.md"
+      - "GEMINI.md"
       - "DRIVE_SYNC_STATUS.md"
+      - ".github/PULL_REQUEST_TEMPLATE.md"
+      - ".github/ISSUE_TEMPLATE/*.md"
       - ".github/workflows/drive-context-validate.yml"
   workflow_dispatch:
 
@@ -83,6 +89,17 @@ jobs:
                   "Gemini CLI",
                   "ChatGPT",
                   "scripts/external_review.py",
+              ],
+              "docs/PMO_REPORTING_WORKFLOW.md": [
+                  "PMO Handoff",
+                  "Detailed PMO Check",
+                  "Gemini Review Trigger",
+                  "Next Owner",
+              ],
+              "GEMINI.md": [
+                  "external review advisor",
+                  "SSOT consistency",
+                  "External Review Result",
               ],
           }
 

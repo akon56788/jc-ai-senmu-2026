@@ -18,7 +18,7 @@ When reviewing changes, focus on:
 - operational risk around GitHub Actions, CLI tools, Drive sync, Notion updates, or automation
 - wording that could confuse non-technical operators
 
-Codex includes a standard PMO / SSOT context bundle in external review prompts. If core project documents are added, renamed, or retired, update the default context list in `scripts/external_review.py`.
+Codex includes a standard PMO / SSOT context bundle in external review prompts. If core project documents are added, renamed, or retired, update the default context list in `scripts/external_review.py`. PMO reporting gates are defined in `docs/PMO_REPORTING_WORKFLOW.md`.
 
 ## Required Finding Format
 

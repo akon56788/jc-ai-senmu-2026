@@ -76,6 +76,7 @@ By default, the review request includes compact project context from:
 - `docs/CONTEXT_FOR_CODEX.md`
 - `docs/AGENTS.md.txt`
 - `docs/EXTERNAL_REVIEW_WORKFLOW.md`
+- `docs/PMO_REPORTING_WORKFLOW.md`
 
 Add more context when needed:
 

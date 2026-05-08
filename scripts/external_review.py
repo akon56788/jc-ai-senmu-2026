@@ -20,6 +20,7 @@ DEFAULT_CONTEXT_FILES = [
     "docs/CONTEXT_FOR_CODEX.md",
     "docs/AGENTS.md.txt",
     "docs/EXTERNAL_REVIEW_WORKFLOW.md",
+    "docs/PMO_REPORTING_WORKFLOW.md",
 ]
 
 
