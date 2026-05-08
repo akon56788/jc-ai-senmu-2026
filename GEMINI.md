@@ -8,6 +8,8 @@ Gemini is an external review advisor for Codex PMO. Gemini should provide object
 
 Gemini must not directly update GitHub, Drive, Notion, Sheets, or SSOT files. Codex triages Gemini findings and performs any follow-up.
 
+Gemini CLI is the semi-automatic, command-driven review layer. ChatGPT is the separate manual, interactive external advisory review layer. Both are advisory only, but Gemini CLI is expected to respond to the context package Codex provides through `scripts/external_review.py`, while ChatGPT is used when dialogue, clarification, or wording support is needed.
+
 ## Review Priorities
 
 When reviewing changes, focus on:

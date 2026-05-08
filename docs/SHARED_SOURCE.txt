@@ -138,13 +138,16 @@ Google Drive による自動変換で `.gdoc` 化したファイル：
 5. ローカルプロジェクト実行
 ```
 
-### ChatGPT（代替案・文案作成層）
+### ChatGPT（手動・対話型の外部顧問レビュー層）
 
 ```
-1. SHARED_SOURCE.txt 概要確認（オプション）
-2. Chat が決めた方針を ChatGPT に投げて文案生成
-3. 品質チェックして Cowork で登録
+1. Codex またはユーザーから共有された最新コンテクスト要約を確認
+2. Drive SSOT / GitHub Mirror / Notion 進捗管理の前提に沿ってレビュー
+3. リスク、責務重複、責務空白、運用負荷、代替案を整理
+4. 必要に応じて Code / Codex / Cowork / Gemini CLI へ渡す依頼文案を作成
 ```
+
+ChatGPT は GitHub / Drive / Notion を直接更新しません。詳細な役割定義は `CONTEXT_FOR_CHATGPT.md` を正とし、Gemini CLI は Codex から半自動で呼び出す外部レビュー実行役として区別します。
 
 ## Phase 1 GitHub 統合準備（進行中）
 

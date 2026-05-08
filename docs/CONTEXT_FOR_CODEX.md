@@ -120,6 +120,9 @@ python scripts/external_review.py --target docs/CONTEXT_FOR_CODEX.md --question 
 - `Risk`: PMO レポートで明示し、必要なら軽微修正
 - `Suggestion`: 余力があれば反映
 - `No issue`: そのまま進行可能
+- ChatGPT は手動・対話型の外部顧問レビュー、Gemini CLI は Codex から半自動で呼び出すレビュー実行役として区別する
+- ChatGPT に渡すレビュー依頼文には、Codex が必要な SSOT 要約・差分・判断対象を含める
+- ChatGPT / Gemini CLI のレビュー結果は助言として扱い、Codex が分類・要約したうえでユーザー確認を取り、承認後に GitHub Mirror PR や Drive SSOT 反映案へ進める
 
 ---
 
