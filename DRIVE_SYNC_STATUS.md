@@ -11,15 +11,15 @@
 
 ## Current Scope
 
-### Context Files (GitHub SSoT → Drive Sync)
+### Context Files (Drive SSoT + GitHub Mirror)
 - `docs/SHARED_SOURCE.txt`
 - `docs/AGENTS.md.txt`
 - `docs/CODEX_WORKFLOW.md.txt`
 
-### Engagement System Files (GitHub SSoT + Drive ミラー配置)
+### Engagement System Files (Drive SSoT + GitHub Mirror)
 - **Narrative File**: `kondo_narrative_v1.16.md`
-  - GitHub SSoT: `docs/narrative/kondo_narrative.md` (commit: ebeaa7f)
-  - Drive Mirror: ID `1LsrD7u-Jd5Py1Qv2d3FkWe1oeUoFVwd-xhYaCM4y6TU`
+  - Drive SSoT: ID `1LsrD7u-Jd5Py1Qv2d3FkWe1oeUoFVwd-xhYaCM4y6TU`
+  - GitHub Mirror: `docs/narrative/kondo_narrative.md` (commit: ebeaa7f)
   - Folder: 専務理事対応（AI活用）
   - Purpose: 全ツール（Code・Codex・Cowork）アクセス用
   - Sync Date: 2026-05-08

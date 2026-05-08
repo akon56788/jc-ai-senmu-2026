@@ -24,8 +24,8 @@ if sys.stdout.encoding != 'utf-8':
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-# MANIFEST document ID
-MANIFEST_DOC_ID = "1I1RDFgfo90ZqYIhPnTZukrl3D70gjFy2WOWC2MHpdb4"
+# MANIFEST document ID (正本 Drive SSOT - Issue #19 確認済み)
+MANIFEST_DOC_ID = "1guHY4inY_lXrpxVkHepT9Fi0-7xjoObF4SQsNw3w1tA"
 
 # Google OAuth credentials file location
 CREDENTIALS_FILE = Path.home() / ".claude" / "credentials.json"
