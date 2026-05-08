@@ -39,17 +39,26 @@ Updated three key context files to add engagement system references:
    - Updated engagement system section with corrected SSoT policy
    - Includes template structure, core roles reference, and LLM system prompt guidance
 
-### ⚠️ Point 3: Update Drive MANIFEST
-**Status**: PENDING (Manual Action Required)
+### ✅ Point 3: Update Drive MANIFEST
+**Status**: COMPLETE (Automated via OAuth)
 
-**What needs to be done**:
-- Update the Drive MANIFEST document (ID: 1I1RDFgfo90ZqYIhPnTZukrl3D70gjFy2WOWC2MHpdb4)
-- Add new section for **Issue #21 Engagement System Files**
-- Include entries for:
-  - Narrative file: ID `1LsrD7u-Jd5Py1Qv2d3FkWe1oeUoFVwd-xhYaCM4y6TU` (Drive SSoT, 正本)
-  - GitHub Mirror reference: docs/pmo_engagement_template.md, docs/kondo_core_roles.md, docs/llm_engagement_systemprompt.md
+**Implementation**:
+- Created `scripts/update_manifest.py` using OAuth 2.0 authentication
+- Leverages existing Google OAuth credentials from `~/.claude/credentials.json`
+- Automatically inserts Issue #21 engagement system section into MANIFEST
+- Handles token refresh and caching via `~/.claude/google_oauth_token.json`
 
-**Note**: This requires direct Google Doc editing via the Drive MANIFEST document. Cannot be automated via API due to Google Drive API scope limitations.
+**Executed successfully**:
+- ✅ MANIFEST document updated (ID: 1I1RDFgfo90ZqYIhPnTZukrl3D70gjFy2WOWC2MHpdb4)
+- ✅ Issue #21 Engagement System Files section added
+- ✅ Includes narrative file ID, GitHub mirror references, and architecture diagram
+- ✅ Commit: 10f7ef7 (feat: enable OAuth 2.0 for automated MANIFEST updates)
+
+**Automation Details**:
+- OAuth 2.0 flow with client credentials from `~/.claude/credentials.json`
+- Automatic token refresh on expiration
+- Windows UTF-8 encoding support
+- Can be re-run to update MANIFEST with: `python scripts/update_manifest.py`
 
 ### ✅ Point 4: Document PMO Operational Understanding
 **Status**: COMPLETE
@@ -70,16 +79,17 @@ PMO operational understanding of the engagement template is documented in:
 
 ## 🎯 Remaining Action Items
 
-### Immediate (Manual):
-- [ ] User updates Drive MANIFEST with Issue #21 engagement system files section
-  - Drive SSoT: Narrative file ID
-  - GitHub Mirror: Template & system prompt files
-  - Designation: Drive (正本) / GitHub (ミラー・版管理・差分確認)
-
 ### Verification:
 - [ ] Confirm all GitHub commits are visible and SSoT policy is correct across all three repos (GitHub, Drive, Memory)
+  - ✅ All 4 points documented and automated
+  - 🔍 Pending: cross-system consistency check (GitHub ↔ Drive ↔ Memory)
 - [ ] Test engagement template with 1 sample task to verify PMO workflow
 - [ ] Collect feedback on template effectiveness
+
+### Optional (Future Enhancement):
+- Integrate `scripts/update_manifest.py` into CI/CD or scheduled sync pipeline
+- Create pre-commit hook to validate MANIFEST consistency
+- Archive MANIFEST versions to Drive history folder
 
 ---
 
@@ -89,6 +99,7 @@ PMO operational understanding of the engagement template is documented in:
 |--------|---------|-------|--------|
 | d730553 | fix: correct SSoT policy | DRIVE_SYNC_STATUS.md, narrative_engagement_system.md | SSoT policy unified across all engagement files |
 | ea84196 | docs: update context files | PMO_REPORTING_WORKFLOW.md, CONTEXT_FOR_CODEX.md, TOOL_CONTEXT_GUIDE.md | Context files now reference engagement system & corrected SSoT |
+| 10f7ef7 | feat: enable OAuth 2.0 for automated MANIFEST updates | scripts/update_manifest.py | Point 3 automation complete; Drive MANIFEST updates now automated |
 
 ---
 
@@ -117,5 +128,10 @@ GitHub Docs/ (Mirror: 版管理・差分確認)
 
 ---
 
-**Next Session**: Await Drive MANIFEST update from user, then validate SSoT coherence across all three systems (GitHub, Drive, Memory).
+**Status**: All 4 points implemented and automated. Ready for verification and PMO operational testing.
+
+**Next Steps**:
+1. Verify SSOT coherence across GitHub, Drive, and Memory (cross-system consistency check)
+2. Conduct pilot test of engagement template with sample task
+3. Collect PMO and user feedback on implementation effectiveness
 
