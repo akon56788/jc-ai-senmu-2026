@@ -453,3 +453,7 @@ Update this register when:
 - #37: Gemini Ops Lane setup
 - #38: AI Capacity Alert operation
 - #42: Drive SSOT directory reorganization
+
+## Related Registers
+
+- `docs/PROJECT_OWNERSHIP_REGISTER.md`: ownership / auth principal / connector authority tracking.
