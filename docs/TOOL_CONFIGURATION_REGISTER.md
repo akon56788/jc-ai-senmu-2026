@@ -446,6 +446,7 @@ Update this register when:
 - automation / bypass / auto-PR settings change,
 - a security or data boundary changes,
 - a tool-side update suggestion is made at Issue close.
+- the weekly AI PMO reliability check finds role drift, stale sources, connector ownership issues, capacity risk, or Drive/GitHub sync drift.
 
 ## Related Issues
 
@@ -457,3 +458,7 @@ Update this register when:
 ## Related Registers
 
 - `docs/PROJECT_OWNERSHIP_REGISTER.md`: ownership / auth principal / connector authority tracking.
+
+## Related Automations
+
+- `AI PMO Reliability Weekly Check`: weekly read-first audit for role understanding, source freshness, connector state, capacity state, and Drive/GitHub sync state.

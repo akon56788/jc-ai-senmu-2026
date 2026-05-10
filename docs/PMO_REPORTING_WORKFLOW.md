@@ -148,6 +148,74 @@ A task is PMO-complete when:
 
 ---
 
+## Weekly AI PMO Reliability Check
+
+As of 2026-05-11, Codex PMO runs a weekly reliability check in addition to Issue close checks.
+
+Purpose:
+
+- catch stale context before it causes tool disagreement,
+- detect connector ownership drift before important work,
+- keep capacity routing visible,
+- ensure Drive SSOT and GitHub Mirror remain aligned,
+- make role-boundary drift visible across AI lanes.
+
+Minimum weekly checks:
+
+1. **Role understanding**
+   - Confirm each active AI lane still understands its current role and authority boundary:
+     - Codex PMO
+     - Claude Code
+     - Claude Chat
+     - Claude Cowork
+     - ChatGPT Business
+     - Gemini / Gems
+     - Gemini CLI
+
+2. **Source freshness**
+   - Check whether each tool is reading the current source:
+     - Drive SSOT
+     - GitHub Mirror
+     - Project Knowledge / uploaded files
+     - local files
+     - memory / record
+   - Do not treat "file exists" as proof that the tool has the latest context.
+
+3. **Connector state**
+   - Review ownership and auth health for:
+     - ChatGPT Business Project
+     - Google Drive connector
+     - GitHub connector
+     - Gemini Gems Knowledge
+     - Claude Chat / Cowork Drive connection
+     - Notion Integration
+     - GitHub PAT / gh CLI
+     - Codex Local / Cloud
+
+4. **Capacity state**
+   - Check recent or current usage-limit incidents.
+   - Route capacity / plan / fallback lessons to #38.
+   - Route broader design lessons to #39.
+
+5. **Drive / GitHub sync state**
+   - Check whether Drive SSOT updates need GitHub commit/push.
+   - Check whether GitHub doc updates need Drive SSOT copy.
+   - Record any stale mirror risk.
+
+6. **Follow-up routing**
+   - Standardization / PMO process: #36
+   - Capacity alert operation: #38
+   - Token-aware process design: #39
+   - Drive SSOT directory/source structure: #42
+
+Automation:
+
+- `AI PMO Reliability Weekly Check`
+- Schedule: weekly, Monday morning JST
+- Mode: read-first audit; produce recommended next actions unless a low-risk write action is explicitly in scope.
+
+---
+
 ## Issue Close Tool Update Suggestions
 
 When an Issue is closed, Codex PMO should suggest tool-side actions to keep each AI tool's context current.
@@ -183,6 +251,14 @@ Minimum checks:
    - If capacity or plan limits were involved, link them to #38.
    - If Token/capacity design lessons emerged, link them to #39.
    - If Drive directory/source structure changed, link them to #42.
+
+6. **Reliability check delta**
+   - If the close changed any of the weekly reliability dimensions, note the delta:
+     - role understanding
+     - source freshness
+     - connector state
+     - capacity state
+     - Drive / GitHub sync state
 
 Template:
 

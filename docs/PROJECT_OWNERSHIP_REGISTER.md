@@ -73,7 +73,8 @@ Run this checklist when:
 - Drive source or GitHub connector is reconnected,
 - a tool cannot find an expected context file,
 - a major Issue closes and context changed,
-- a capacity incident forces fallback tooling.
+- a capacity incident forces fallback tooling,
+- the weekly AI PMO reliability check runs.
 
 Checklist:
 
@@ -85,6 +86,21 @@ Checklist:
 6. Does source refresh require manual resync / re-index / pull?
 7. Is the relevant context mirrored to the source this tool actually reads?
 8. Is the ownership state recorded in this register and `TOOL_CONFIGURATION_REGISTER.md`?
+
+## Weekly Review Scope
+
+At least once per week, Codex PMO should check whether the following ownership-sensitive sources are still healthy:
+
+- ChatGPT Business Project and Drive/GitHub connectors
+- Gemini Gems Knowledge and source files
+- Gemini CLI local auth and repo-root startup path
+- Claude Code GitHub/repo visibility
+- Claude Chat / Cowork Drive connection
+- Notion Integration
+- GitHub PAT / gh CLI
+- Codex Local / Cloud settings
+
+The weekly review should be treated as a read-first audit. It should produce recommended next actions unless an explicitly scoped low-risk update is available.
 
 ## Closeout Rule
 
