@@ -44,6 +44,31 @@ Context: Claude usage limit reached; settings reviewed from Code settings screen
 | PRを自動修正 | OFF | Avoid unattended CI/review response loops. PMO should triage. |
 | PRマージまたはクローズ後に自動アーカイブ | OFF | Keep manual/PMO visibility until workflow stabilizes. |
 
+### Claude Code Context Refresh Incident
+
+Last reviewed: 2026-05-11  
+Incident: Claude Code refreshed repo but could not find:
+
+- `docs/HUMAN_OPERATING_MANUAL_FOR_AI_PMO.md`
+- `docs/PMO_MOTIVATION_DESIGN.md`
+- `docs/reference/shift_ai_bpaas_q2_2026_context.md`
+
+Cause:
+
+- These files existed locally and/or in Drive SSOT but had not yet been committed and pushed to GitHub Mirror.
+- Claude Code was reading repository state after GitHub refresh, so untracked local files were invisible.
+
+Resolution:
+
+- Committed and pushed context/tool docs to `main`.
+- Commit: `ca88dcb` (`Add AI PMO context and tool configuration docs`)
+
+Rule:
+
+- If a tool reads from GitHub/repo context, Drive SSOT updates are not enough.
+- Important context additions must be mirrored to GitHub before asking Claude Code or other repo-based tools to read them.
+- At Issue close or tool-side update time, check whether the target tool reads Drive, GitHub, Project Knowledge, or local files.
+
 ## Gemini / Gems
 
 Last reviewed: 2026-05-10
