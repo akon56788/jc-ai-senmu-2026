@@ -271,3 +271,27 @@ Codex さんの新しい役割 = **Agent PMO + Code / Cowork / Chat の補完担
 ---
 
 **Last Updated**: 2026-05-07
+
+---
+
+## 2026-05-10 追記: Gemini Ops Lane / Workspace QCD ルール
+
+Gemini Ops Lane は、OpenAI / Claude の Token 圧迫を逃がすための長文コンテクスト処理・現場メモ一次整理・監査レーンとして扱う。
+
+前提:
+- Gemini Apps は Google Workspace Standard / Plus 級の有償 Workspace ライセンス前提で使う。
+- ただし Gemini Apps を無制限とは扱わない。
+- 固定の残 Token 量を API 的に読む運用ではなく、Workspace edition、選択モデル、プロンプト複雑度、アップロードファイル数/サイズ、会話長、上限警告、回答速度、回答品質、手戻り率で運用判断する。
+
+QCD 使い分け:
+- Fast / Flash-like: 軽い要約、粗い token-relief、低リスク整形、短い確認。
+- Thinking: 議事録・現場メモ・雑多なメモの field-intake、一次タスク抽出、標準プロトコル確認。
+- Pro: 議案作成 AX、複数文書監査、Notion / GitHub 候補抽出、重要な PMO ハンドオフ、対外説明・企業向け整理。
+
+Gemini CLI:
+- `auto`: 通常の既定値。
+- `pro`: 複雑な推論、複数ファイルレビュー、PMO / SSOT / workflow audit。
+- `flash`: 速い確認、軽い要約、変換、簡易チェック。
+- `flash-lite`: 最速の単純変換・低リスク整形。
+
+詳細は `docs/GEMINI_OPS_LANE_SETUP.md` を正とする。

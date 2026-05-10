@@ -746,3 +746,23 @@ YYYY-MM-DD_[プロジェクト]_[内容]_[ステータス].[拡張子]
 ---
 
 **このドキュメントは Phase 0/1 の運用ルールです。定期的に更新します。（最後更新：2026-05-05）
+## 2026-05-10 追記: Gemini Ops Lane / Workspace QCD ルール
+
+Gemini は従来の半自動外部レビューに加えて、Gemini Ops Lane として長文コンテクスト処理、現場メモ一次整理、Token relief、整合性監査を担う。ただし、GitHub / Drive / Notion / Sheets / SSOT の直接更新は行わず、最終判断と本番反映は Codex またはユーザーが行う。
+
+Google Workspace Standard / Plus 級の有償 Workspace ライセンス前提で使うが、Gemini Apps は無制限前提にしない。固定の残 Token 量ではなく、選択モデル、プロンプト複雑度、アップロードファイル数/サイズ、会話長、上限警告、回答速度、回答品質、手戻り率で運用判断する。
+
+使い分け:
+- Fast / Flash-like: 軽い要約、粗い token-relief、低リスク整形、短い確認。
+- Thinking: 議事録・現場メモ・雑多なメモの field-intake、一次タスク抽出、標準プロトコル確認。
+- Pro: 議案作成 AX、複数文書監査、Notion / GitHub 候補抽出、重要な PMO ハンドオフ、対外説明・企業向け整理。
+
+Gemini CLI:
+- `auto`: 通常の既定値。
+- `pro`: 複雑な推論、複数ファイルレビュー、PMO / SSOT / workflow audit。
+- `flash`: 速い確認、軽い要約、変換、簡易チェック。
+- `flash-lite`: 最速の単純変換・低リスク整形。
+
+詳細は `docs/GEMINI_OPS_LANE_SETUP.md` を正とする。
+
+---

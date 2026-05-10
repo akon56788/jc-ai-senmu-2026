@@ -145,3 +145,36 @@ A task is PMO-complete when:
 - SSOT / GitHub / Notion / Drive impact is either handled or marked N/A,
 - sync confirmation is linked or named when Drive SSOT / GitHub sync was performed,
 - external review is either completed or explicitly not needed.
+
+---
+
+## Issue Close Tool Update Suggestions
+
+When an Issue is closed, Codex PMO should suggest tool-side actions to keep each AI tool's context current.
+
+Use this especially when the Issue changed shared context, tool roles, Knowledge Pack files, Notion/GitHub relationships, Drive SSOT, or operating rules.
+
+Template:
+
+```markdown
+Tool-side update suggestions:
+- Codex: latest repo/context already reflected / N/A
+- Claude Code: pull latest before next work
+- Claude Chat: replace old project attachments if this context is needed
+- Claude Cowork: update only if Notion/Drive task flow is affected
+- ChatGPT: use latest context files or summary if wall-discussing this issue
+- Gemini / Gems: update Drive Knowledge Pack or confirm Drive reference
+- Gemini CLI: no extra action if `scripts/external_review.py` context list is updated
+- Notion: [N/A / update project-task relation]
+- Drive SSOT: [N/A / pending sync / updated]
+- GitHub: [closed / follow-up issue created]
+```
+
+For small Issues, list only affected tools. For large Issues, list all tools.
+
+General rule:
+
+- AI project files, uploaded attachments, and Gem local uploads are snapshots unless explicitly Drive-linked.
+- GitHub-based tools should pull latest before continuing.
+- Drive SSOT remains the canonical source; GitHub Mirror is used for diff and review.
+- Tool-side settings that affect safety, automation, capacity, context freshness, or notifications should be recorded in `docs/TOOL_CONFIGURATION_REGISTER.md`.

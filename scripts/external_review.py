@@ -16,6 +16,9 @@ REVIEWS_DIR = ROOT / "reviews"
 # Keep this list aligned with the current core PMO / SSOT documents.
 DEFAULT_CONTEXT_FILES = [
     "GEMINI.md",
+    "docs/GEMINI_OPS_KNOWLEDGE_PACK.md",
+    "docs/GEMINI_OPS_LANE_SETUP.md",
+    "docs/CONTEXT_UPDATE_WORKFLOW.md",
     "docs/TOOL_CONTEXT_GUIDE.md",
     "docs/CONTEXT_FOR_CODEX.md",
     "docs/AGENTS.md.txt",
