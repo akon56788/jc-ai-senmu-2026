@@ -356,6 +356,41 @@ Last reviewed: 2026-05-10
 | Role | Notion/Sheets/Drive operational support | Coordinate through Codex PMO for SSOT-sensitive updates. |
 | Direct updates | Only when explicitly scoped and PMO-approved | Avoid hidden divergence between Notion/Drive/GitHub. |
 
+### Claude Cowork Context Refresh Verification
+
+Last reviewed: 2026-05-11  
+Status: Drive context verification and local intake passed.
+
+Cowork identified the following Drive files:
+
+| Drive file | Drive ID | Role |
+| --- | --- | --- |
+| `2026-05-10__human-operating-manual-ai-pmo__active.txt` | `1RTb9aMdehE6slXIKjjiaTHN3gmB9D7zF` | Human operating manual |
+| `2026-05-10__pmo-motivation-design__active.txt` | `1o4yt8gfeYUzgnN3FRVoSaIc6HCnpLLZv` | PMO motivation design |
+| `2026-05-10__gemini__context__active.txt` | `1owl9eYRpx-cUO24Yy6MYxRgvC5iBJNOa` | GEMINI.md equivalent |
+| `2026-05-10__gemini-ops-lane__knowledge-pack__active.txt` | `1OgzRaoowvvbloY1VVlVUDWzZDAIHBCMF` | Gemini knowledge pack |
+| `2026-05-10__context-for-codex__active.txt` | `10JkRc7PqteShq_5Rxn6OWsPTsYQABe3h` | Context for Codex |
+| `2026-05-10__shared-source__active.txt` | `1S_bInpdjLN3xXHEy_Uw5XxDZ3qLE2WJt` | Shared source |
+| `2026-05-10__shift-ai-bpaas-q2-context.md` | `1OJ9p7fyPtQLdi2FakEqHlWJQJLz0okfM` | SHIFT AI-BPaaS context |
+
+Cowork local intake:
+
+- `HUMAN_OPERATING_MANUAL_FOR_AI_PMO.md`
+- `PMO_MOTIVATION_DESIGN.md`
+- `shift_ai_bpaas_q2_2026_context.md`
+- `GEMINI.md`
+
+Confirmed understanding:
+
+- Gemini Ops Lane is available as long-context / token-relief lane.
+- Cowork should align with meaning-first support, smallest-action decomposition, and safe divergence capture.
+- Type 1/2 executive secretary projects and tasks remain Notion-facing.
+- Type 3 standardization / design / research items remain GitHub Issues / Chat-facing.
+
+Rule:
+
+- Cowork can help operationalize Notion/Sheets/Drive tasks, but SSOT-sensitive changes should be scoped and coordinated through Codex PMO.
+
 ## Update Triggers
 
 Update this register when:
