@@ -305,6 +305,50 @@ Last reviewed: 2026-05-10
 | Model routing | `auto` default; `pro` for audit; `flash` for lightweight review | See `docs/GEMINI_OPS_LANE_SETUP.md`. |
 | Write authority | None by default | Review output only; Codex/user execute. |
 
+### Gemini CLI Local Verification
+
+Last reviewed: 2026-05-11  
+Gemini CLI version observed: `v0.41.2`  
+Initial wrong cwd observed: `C:\Windows\System32`  
+Correct usage: start from repository root.
+
+Repo root:
+
+```text
+C:\Users\User\OneDrive\ドキュメント\New project\temp-test\jc-ai-senmu-2026-escalated
+```
+
+Verification passed:
+
+Gemini CLI read and summarized:
+
+- `GEMINI.md`
+- `docs/GEMINI_OPS_LANE_SETUP.md`
+- `docs/GEMINI_OPS_KNOWLEDGE_PACK.md`
+- `docs/CONTEXT_FOR_CODEX.md`
+- `docs/TOOL_CONFIGURATION_REGISTER.md`
+- `docs/reference/shift_ai_bpaas_q2_2026_context.md`
+
+Confirmed understanding:
+
+- Gemini CLI / Gemini Ops Lane is advisory.
+- Primary roles: long-context processing, field-note structure, consistency audit, token relief.
+- No direct update authority for GitHub, Drive SSOT, Notion, Sheets, or SSOT files.
+- Final decisions remain with user or Codex PMO.
+- Drive = SSOT, GitHub = Mirror / Version Layer, Notion = Operational Task Layer.
+- Codex = execution / sync / PMO lead.
+- Claude = implementation / dialogue / operational support.
+- ChatGPT = external advisory / brainstorming.
+- Gemini = heavy reader / structure / audit / token-relief lane.
+- Use facts / inferences / recommended actions separation.
+- Use `pro` for complex audit and `flash` for lightweight summary / transformation, subject to plan/model availability.
+
+Rule:
+
+- Do not start Gemini CLI from `C:\Windows\System32` for project work.
+- Start from repo root so `GEMINI.md` and project context are discoverable.
+- Treat `no sandbox` as a caution state; prefer read-only review unless actions are explicitly scoped.
+
 ## Claude Chat
 
 Last reviewed: 2026-05-10
