@@ -154,6 +154,36 @@ When an Issue is closed, Codex PMO should suggest tool-side actions to keep each
 
 Use this especially when the Issue changed shared context, tool roles, Knowledge Pack files, Notion/GitHub relationships, Drive SSOT, or operating rules.
 
+### Issue Close Standard Check
+
+As of 2026-05-11, every meaningful Issue close should include a lightweight closeout check for context freshness and tool-side follow-up.
+
+Minimum checks:
+
+1. **Tool-side update suggestions**
+   - State which tools need user action, resync, pull, Project Knowledge update, or no action.
+   - Include Codex, Claude Code, Claude Chat, Claude Cowork, ChatGPT, Gemini / Gems, Gemini CLI, Notion, Drive SSOT, and GitHub when the Issue affected shared context.
+
+2. **Source refresh check**
+   - Identify whether each affected tool reads from Drive, GitHub/repo, Project Knowledge, local files, or memory/record.
+   - Do not assume a tool is current just because the source exists somewhere.
+
+3. **Drive / GitHub / Project Knowledge / local distinction**
+   - Drive source tools may need resync / re-index.
+   - GitHub/repo tools need commit/push and pull/refresh.
+   - Project Knowledge and uploaded attachments are snapshots unless Drive-linked.
+   - Local files are invisible to other tools unless copied to Drive or committed to GitHub.
+
+4. **Postmortem decision**
+   - Create a postmortem when the Issue involved capacity limits, connector ownership, source freshness, role-boundary changes, multi-tool context propagation, Drive/GitHub/Notion coordination, or meaningful productivity / QCD learning.
+   - For small Issues, a short close comment is enough.
+
+5. **Follow-up routing**
+   - If new standards emerge, link them to #36.
+   - If capacity or plan limits were involved, link them to #38.
+   - If Token/capacity design lessons emerged, link them to #39.
+   - If Drive directory/source structure changed, link them to #42.
+
 Template:
 
 ```markdown
@@ -178,3 +208,4 @@ General rule:
 - GitHub-based tools should pull latest before continuing.
 - Drive SSOT remains the canonical source; GitHub Mirror is used for diff and review.
 - Tool-side settings that affect safety, automation, capacity, context freshness, or notifications should be recorded in `docs/TOOL_CONFIGURATION_REGISTER.md`.
+- If an Issue changes shared context, Codex PMO should ensure the relevant source path is refreshed: Drive resync, GitHub commit/push, Project Knowledge update, or local file copy as appropriate.
