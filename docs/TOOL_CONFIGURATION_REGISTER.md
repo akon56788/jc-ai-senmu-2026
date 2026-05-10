@@ -315,6 +315,37 @@ Last reviewed: 2026-05-10
 | Capacity state | Degraded when shared Claude limit reached | See #38 capacity alert logs. |
 | Role | Dialogue / reflection / wording / advisory review | Avoid treating as SSOT updater. |
 
+### Claude Chat Context Refresh Verification
+
+Last reviewed: 2026-05-11  
+Status: Drive context verification passed.
+
+Claude Chat read the following Drive files:
+
+| Logical file | Drive file | Status |
+| --- | --- | --- |
+| `HUMAN_OPERATING_MANUAL_FOR_AI_PMO.md` | `2026-05-10__human-operating-manual-ai-pmo__active.txt` | Read complete |
+| `PMO_MOTIVATION_DESIGN.md` | `2026-05-10__pmo-motivation-design__active.txt` | Read complete |
+| `shift_ai_bpaas_q2_2026_context.md` | `2026-05-10__shift-ai-bpaas-q2-context.md` | Read complete |
+
+Confirmed understanding:
+
+- Claude Chat role: dialogue-based thinking support, policy review, wording, wall-clock thinking, second opinion before decisions.
+- Heavy long-context intake should be routed to Gemini Ops Lane.
+- Issue organization and PMO inventory should be routed to Codex PMO.
+- Operational progress should be represented in Notion.
+- Support style: meaning -> smallest action -> divergence capture -> convergence externalization.
+- Routine work should be connected to DX/AX, standardization, and handoff assets.
+- Friction is design input, not personal failure.
+- Kondo's JC / personal PoC is relevant to AI-BPaaS deployment learning.
+- Emerging role: Multi-vendor AI Deployment Strategist.
+
+Rule:
+
+- Claude Chat can read Drive SSOT directly when connected.
+- For repo-based context, Claude Code requires GitHub Mirror push.
+- Prefer Gemini for heavy first-pass reading when Claude capacity is constrained.
+
 ## Claude Cowork
 
 Last reviewed: 2026-05-10
