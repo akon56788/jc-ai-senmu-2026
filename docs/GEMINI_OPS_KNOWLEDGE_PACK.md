@@ -102,6 +102,12 @@ QCD使い分け:
 
 Pro容量は、PMOミスや大きな手戻りを防ぐ作業に優先投入する。
 
+相談系AIの横断使い分けは `docs/ADVISORY_MODEL_ROUTING.md` を正とする。
+
+- Claude Chat: 人間文脈・文面・内省・対人相談
+- Gemini Chat / Gems: 長文一次処理・広域監査・Token relief
+- ChatGPT Business: 外部顧問レビュー・PMO設計・構造化判断
+
 ## Gemini CLIモデル使い分け
 
 - `auto`: 通常の既定値

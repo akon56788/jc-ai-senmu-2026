@@ -435,6 +435,122 @@ Rule:
 
 - Cowork can help operationalize Notion/Sheets/Drive tasks, but SSOT-sensitive changes should be scoped and coordinated through Codex PMO.
 
+## Interactive Advisory Model / License Routing
+
+Last reviewed: 2026-05-11  
+Related issues: #36, #38, #39, #43
+
+This section defines how the three interactive advisory lanes should be selected by license, model/mode, and token/capacity pressure.
+
+### Current Purchased / Available Licenses
+
+These are operational assumptions based on user-provided context. Verify exact plan names and quota details only when procurement, admin settings, or billing decisions matter.
+
+| Lane | Current license / access premise | PMO interpretation |
+| --- | --- | --- |
+| ChatGPT Business | Business ChatGPT & Codex, 2 seats, Work Life Renovation workspace | Primary external advisory / PMO design lane, plus warm-standby potential through second seat. |
+| Claude Chat | Claude Pro | Human-context / wording / reflection lane. Capacity is shared with Claude Code / Cowork in practice; treat limits as cross-Claude risk. |
+| Gemini Chat / Gems | Google Workspace paid / Plus-class premise plus Gemini app access; Gemini 3 modes available | Long-context / token-relief / broad intake lane. Do not assume unlimited; track practical capacity by warnings, latency, quality, and rework. |
+| Gemini CLI | Local Gemini CLI authenticated as user; observed Gemini Code Assist for individuals in CLI screen | Semi-automated review lane from repo root. Advisory/read-first unless explicitly scoped. |
+
+### High-Level Routing
+
+| Work type | First choice | Escalate when | Avoid when |
+| --- | --- | --- | --- |
+| Human nuance, motivation, interpersonal wording | Claude Chat Sonnet 4.6 + adaptive thinking ON | Opus 4.7 + adaptive thinking ON for high-stakes self/narrative/external wording | Claude capacity warnings are active, or large document intake is needed |
+| Long-context intake, messy notes, meeting transcripts, broad audit | Gemini Thinking mode | Gemini Pro for important multi-document audit / agenda AX / AI-BPaaS synthesis | Simple formatting, short copy edits, or final wording polish |
+| External advisory review, PMO design, issue design, research framing | ChatGPT Business latest 5.5 Pro, effort Standard | Effort Extended for #39-class research, postmortems, important architecture decisions | Direct Drive/GitHub/Notion execution, or stale Project source not resynced |
+
+### Claude Chat Model Routing
+
+Claude Chat is the human-context / wording / reflective PMO lane.
+
+| Model / setting | Recommended use | Token / capacity note |
+| --- | --- | --- |
+| Opus 4.7 + adaptive thinking ON | High-stakes reflection, important external-facing narrative, self-description, relationship-sensitive wording, PMO motivation design updates | Highest-quality lane; reserve for important work because Claude Pro capacity can become a hard bottleneck. |
+| Sonnet 4.6 + adaptive thinking ON | Default Claude Chat mode for day-to-day consultation, JC wording, practical PMO support, motivation-aware decomposition, issue/Notion pre-organization | Standard default. Good balance of quality and capacity. |
+| Haiku 4.5 + adaptive thinking OFF | Lightweight rewriting, short summaries, LINE draft variants, bullet cleanup, typo/wording fixes | Use for low-risk tasks to avoid spending higher-model capacity. |
+| Haiku 4.5 or Sonnet 4.6 + adaptive thinking ON | Small tasks that include a little judgment | Use only when judgment matters; otherwise keep thinking OFF for light transformations. |
+
+Rule:
+
+```text
+Claude Chat = human-context / wording / reflective PMO lane.
+Default: Sonnet 4.6 + adaptive thinking ON.
+Escalate: Opus 4.7 + adaptive thinking ON.
+Economize: Haiku 4.5 + adaptive thinking OFF.
+```
+
+### Gemini Chat / Gems Mode Routing
+
+Gemini Chat / Gems is the long-context / broad intake / token-relief lane.
+
+| Mode | Recommended use | Token / capacity note |
+| --- | --- | --- |
+| 高速モード | Quick summaries, bullet conversion, first-pass classification, light reformatting | Fastest / cheapest-feeling lane. Use when quality risk is low. |
+| 思考モード | Standard Gemini mode for issue candidate extraction, multi-file reading, moderate audit, fact/inference/action separation | Default for Gemini Ops Lane when the input is broad but not mission-critical. |
+| Pro | Important multi-document audit, agenda AX, ontology/context extraction, AI-BPaaS / Token-aware synthesis, PMO handoff quality checks | Reserve Pro for work that prevents downstream rework or PMO mistakes. |
+
+Rule:
+
+```text
+Gemini = heavy reader / broad structuring / token-relief lane.
+Default: 思考モード.
+Escalate: Pro for important cross-document audit and synthesis.
+Economize: 高速モード for low-risk transformation.
+```
+
+### ChatGPT Business Model Routing
+
+ChatGPT Business is the external advisory / structure / PMO design lane.
+
+| Model / setting | Recommended use | Token / capacity note |
+| --- | --- | --- |
+| Latest 5.5 Auto | Lightweight dialogue, quick question, ambiguous task where effort can be auto-adjusted | Good for ordinary conversation when the result is not authoritative. |
+| Latest 5.5 Thinking | Medium-weight comparison, policy review, trade-off analysis | Use when the question needs deliberate reasoning but not full research-level review. |
+| Latest 5.5 Pro + effort Standard | Default for external advisory review, PMO design, issue design, role-boundary checks, postmortem synthesis | Primary ChatGPT Business setting for this Project. |
+| Latest 5.5 Pro + effort Extended | #39-class research, important architecture decisions, major postmortems, AI-BPaaS / Token-aware abstraction, public/external explanation drafts | Use selectively because it is slower and heavier. |
+
+Rule:
+
+```text
+ChatGPT Business = external advisory / PMO design / structured judgment lane.
+Default: Latest 5.5 Pro + effort Standard.
+Escalate: Pro + effort Extended for high-stakes abstraction and postmortems.
+Economize: Auto or Thinking for ordinary dialogue and medium review.
+```
+
+### Token / Capacity Operating Rules
+
+1. Do not treat any paid plan as unlimited.
+2. Record visible or inferred capacity events in #38:
+   - usage limit warning,
+   - degraded UI,
+   - hard block,
+   - reset time,
+   - plan/seat/credit mitigation,
+   - fallback lane used.
+3. Prefer capacity-aware routing:
+   - Claude capacity constrained -> move long-context work to Gemini and advisory structure to ChatGPT.
+   - ChatGPT / Codex constrained -> move long-context intake to Gemini and human wording/reflection to Claude if available.
+   - Gemini Pro capacity should be reserved for high-rework-risk work, not short formatting.
+4. Always distinguish:
+   - model intelligence,
+   - source freshness,
+   - connector ownership,
+   - write authority,
+   - plan capacity.
+5. For important decisions, verify source freshness before increasing model effort. A stronger model reading stale context is still unsafe.
+
+### PMO Shortcut
+
+```text
+人にどう伝える？ -> Claude Chat
+大量に読んで整理して -> Gemini Chat / Gems
+構造としてどう設計する？ -> ChatGPT Business
+実装・反映・Issue・Drive/GitHub -> Codex PMO
+```
+
 ## Update Triggers
 
 Update this register when:
@@ -458,6 +574,7 @@ Update this register when:
 ## Related Registers
 
 - `docs/PROJECT_OWNERSHIP_REGISTER.md`: ownership / auth principal / connector authority tracking.
+- `docs/ADVISORY_MODEL_ROUTING.md`: Claude Chat / Gemini Chat-Gems / ChatGPT Business model, license, and token routing.
 
 ## Related Automations
 
