@@ -209,10 +209,12 @@ Use:
 - Gemini for heavy reading,
 - Claude Chat for wording / human nuance if Claude capacity is available,
 - manual handoff notes until Codex PMO recovers.
+- `docs/PMO_FALLBACK_ENVIRONMENT.md` and `docs/ISSUE_OPERATION_FALLBACK.md` if Issue operations must continue before Codex PMO recovers.
 
 Avoid:
 
 - assuming ChatGPT Business second seat can write to the same sources without role conflict.
+- treating fallback writes as normal autonomous writes; they must be user-confirmed provisional operations with audit trail and Codex recovery check.
 
 ### Gemini capacity or quality constrained
 
@@ -233,6 +235,7 @@ When an Issue changes this routing, update:
 - `docs/TOOL_CONFIGURATION_REGISTER.md`
 - `docs/PROJECT_OWNERSHIP_REGISTER.md`
 - `docs/ADVISORY_MODEL_ROUTING.md`
+- `docs/PMO_FALLBACK_ENVIRONMENT.md` / `docs/ISSUE_OPERATION_FALLBACK.md` if fallback authority or Issue substitute operations changed
 - #36 for standard operation changes
 - #38 for capacity alert changes
 - #39 for Token-aware Process Design lessons

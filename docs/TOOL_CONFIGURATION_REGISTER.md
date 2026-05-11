@@ -26,6 +26,7 @@ Therefore, important tool-side settings should be captured as configuration, not
 - Treat uploaded files and project attachments as snapshots unless explicitly Drive-linked.
 - Record capacity-related settings and warnings in #38.
 - Record context / Knowledge Pack settings in #36 / #37 / #42 as appropriate.
+- When Codex PMO is blocked by capacity / token / usage limit, use `docs/PMO_FALLBACK_ENVIRONMENT.md` and `docs/ISSUE_OPERATION_FALLBACK.md` before allowing another tool to perform substitute Issue operations.
 
 ## Claude Code / Claude Desktop
 
@@ -563,6 +564,7 @@ Update this register when:
 - a security or data boundary changes,
 - a tool-side update suggestion is made at Issue close.
 - the weekly AI PMO reliability check finds role drift, stale sources, connector ownership issues, capacity risk, or Drive/GitHub sync drift.
+- a fallback PMO operation occurs, especially if another tool performs a user-confirmed provisional write while Codex PMO is unavailable.
 
 ## Related Issues
 
@@ -575,6 +577,9 @@ Update this register when:
 
 - `docs/PROJECT_OWNERSHIP_REGISTER.md`: ownership / auth principal / connector authority tracking.
 - `docs/ADVISORY_MODEL_ROUTING.md`: Claude Chat / Gemini Chat-Gems / ChatGPT Business model, license, and token routing.
+- `docs/PMO_FALLBACK_ENVIRONMENT.md`: Codex PMO outage / capacity-limit fallback operating model.
+- `docs/ISSUE_OPERATION_FALLBACK.md`: staged authority for substitute Issue read/comment/create/update operations.
+- `docs/PMO_FALLBACK_HANDOFF_TEMPLATE.md`: required handoff template for fallback operations.
 
 ## Related Automations
 

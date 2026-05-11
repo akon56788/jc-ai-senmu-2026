@@ -105,6 +105,30 @@ Checklist:
 7. Is the relevant context mirrored to the source this tool actually reads?
 8. Is the ownership state recorded in this register and `TOOL_CONFIGURATION_REGISTER.md`?
 
+## Fallback Authority Register
+
+Fallback authority is temporary operational authority used only when Codex PMO is unavailable or capacity-limited.
+
+Principle:
+
+```text
+Fallback write is not autonomous write.
+Fallback write = user-confirmed provisional operation + audit trail + Codex recovery check.
+```
+
+Ownership implication:
+
+- Codex PMO remains the normal PMO manager and reconciliation owner.
+- ChatGPT Business, Claude Chat, Gemini Chat / Gems, Gemini CLI, Claude Code, and Claude Cowork may help as acting leads only within the staged authority in `docs/ISSUE_OPERATION_FALLBACK.md`.
+- Level 2 / Level 3 fallback writes require a visible user confirmation basis and a post-write URL.
+- Codex PMO must review fallback actions after recovery and leave a recovery review comment when needed.
+
+Related files:
+
+- `docs/PMO_FALLBACK_ENVIRONMENT.md`
+- `docs/ISSUE_OPERATION_FALLBACK.md`
+- `docs/PMO_FALLBACK_HANDOFF_TEMPLATE.md`
+
 ## Weekly Review Scope
 
 At least once per week, Codex PMO should check whether the following ownership-sensitive sources are still healthy:

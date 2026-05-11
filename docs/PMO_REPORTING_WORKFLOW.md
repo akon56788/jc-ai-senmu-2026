@@ -216,6 +216,36 @@ Automation:
 
 ---
 
+## PMO Fallback Operation
+
+As of 2026-05-11, Codex PMO has a fallback operation for capacity / token / usage limit incidents.
+
+Use this when Codex PMO cannot continue work because of a hard usage limit, connector outage, local environment failure, or another blocking tool condition.
+
+Core rule:
+
+```text
+Fallback write is not autonomous write.
+Fallback write = user-confirmed provisional operation + audit trail + Codex recovery check.
+```
+
+Related files:
+
+- `docs/PMO_FALLBACK_ENVIRONMENT.md`
+- `docs/PMO_FALLBACK_HANDOFF_TEMPLATE.md`
+- `docs/ISSUE_OPERATION_FALLBACK.md`
+
+Minimum fallback requirements:
+
+1. Check whether the matter can be recorded as a #38 capacity log before creating a new Issue.
+2. If another AI or the user performs a GitHub / Notion / Drive operation while Codex PMO is down, leave a `Fallback PMO Handoff`.
+3. Record target URL, acting tool, authority level, user confirmation, and remaining risk.
+4. When Codex PMO recovers, start by reading fallback handoffs and checking for missing links, duplicate Issues, stale context, and unreflected Drive / GitHub / Notion updates.
+
+Issue write authority should follow staged levels in `docs/ISSUE_OPERATION_FALLBACK.md`.
+
+---
+
 ## Issue Close Tool Update Suggestions
 
 When an Issue is closed, Codex PMO should suggest tool-side actions to keep each AI tool's context current.
